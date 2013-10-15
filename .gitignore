@@ -1,0 +1,9 @@
+.*
+configure.php
+log/*
+tmp/*
+data/*
+batch/*.log
+conf/local.php
+
+!/.gitignore
