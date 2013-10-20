@@ -7,22 +7,21 @@ class AnalyzeBestWorst
 	const BEST_KEY = "ratingBestCount";
 	const WORST_KEY = "ratingWorstCount";
 
-	private $path;
 	private $items;
+	private $path;
 
-	public function run()
+	public function run( $path )
 	{
-		$this->load();
+		$this->path = $path;
+
+		$this->load( $path );
 		$this->analyze();
 		$this->save();
 	}
 
-	private function load()
+	private function load( $path )
 	{
-		$paths = glob( DATA_DIR . "android_rank/*.json" );
-		$this->path = $paths[ count($paths)-1 ];
-
-		$json = file_get_contents( $this->path );
+		$json = file_get_contents( $path );
 		$this->items = json_decode( $json, true );
 	}
 
@@ -48,8 +47,12 @@ class AnalyzeBestWorst
 			$result .= json_encode($box, JSON_UNESCAPED_UNICODE) . "\n";
 		}
 
+		$os = "unknown";
+		if( strpos($this->path, "android") ) $os = "android";
+		if( strpos($this->path, "ios") ) $os = "ios";
+
 		$info = pathinfo( $this->path );
-		$path = DATA_DIR . "android_bestworst/" . $info['filename'] . ".csv";
+		$path = DATA_DIR . "bestworst/" . $info['filename'] . ".{$os}.csv";
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 

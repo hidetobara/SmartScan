@@ -7,19 +7,24 @@ class AnalyzePublisher
 	private $items;
 	private $table;
 
-	public function run()
+	public function run( $path )
 	{
-		$this->load();
+		$this->path = $path;
+
+		$this->clear();
+		$this->load( $path );
 		$this->analyze();
 		$this->save();
 	}
 
-	private function load()
+	private function clear()
 	{
-		$paths = glob( DATA_DIR . "android_rank/*.json" );
-		$this->path = $paths[ count($paths)-1 ];
+		$this->table = array();
+	}
 
-		$json = file_get_contents( $this->path );
+	private function load( $path )
+	{
+		$json = file_get_contents( $path );
 		$this->items = json_decode( $json, true );
 	}
 
@@ -42,7 +47,6 @@ class AnalyzePublisher
 		}
 
 		// ソート
-		$this->table = array();
 		while( count($table) > 0 )
 		{
 			$best = null;
@@ -69,8 +73,12 @@ class AnalyzePublisher
 			$result .= json_encode($box, JSON_UNESCAPED_UNICODE) . "\n";
 		}
 
+		$os = "unknown";
+		if( strpos($this->path, "android") ) $os = "android";
+		if( strpos($this->path, "ios") ) $os = "ios";
+
 		$info = pathinfo( $this->path );
-		$path = DATA_DIR . "android_publisher/" . $info['filename'] . ".csv";
+		$path = DATA_DIR . "publisher/" . $info['filename'] . ".{$os}.csv";
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
