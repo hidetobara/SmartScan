@@ -1,4 +1,5 @@
 <?php
+require_once( INCLUDE_DIR . "Util.class.php" );
 
 
 class AnalyzePublisher
@@ -70,7 +71,7 @@ class AnalyzePublisher
 		foreach( $this->table as $publisher => $list )
 		{
 			$box = array('publisher'=>$publisher, 'titles'=>$list);
-			$result .= json_encode($box, JSON_UNESCAPED_UNICODE) . "\n";
+			$result .= Util::jsonEncode($box) . "\n";
 		}
 
 		$os = "unknown";

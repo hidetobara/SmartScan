@@ -1,5 +1,6 @@
 <?php
 require_once( "HTTP/Request2.php" );
+require_once( INCLUDE_DIR . "Util.class.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
@@ -77,7 +78,7 @@ class IosRankingCrawl
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
-		$json = json_encode( $this->items, JSON_UNESCAPED_UNICODE );
+		$json = Util::jsonEncode( $this->items );
 		$json = str_replace("},", "},\n", $json);
 		file_put_contents( $path, $json );
 	}

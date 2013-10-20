@@ -16,6 +16,17 @@ class Util
 		return $paths[ count($paths)-1 ];
 	}
 
+	/*
+	 * 本番と開発でバージョンが違うため
+	 */
+	static function jsonEncode( $object )
+	{
+		if( ENV_TYPE == "RELASE" ){
+			return json_encode( $object );
+		}else{
+			return json_encode( $object, JSON_UNESCAPED_UNICODE );
+		}
+	}
 }
 
 ?>

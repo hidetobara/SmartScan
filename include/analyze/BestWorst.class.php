@@ -1,4 +1,5 @@
 <?php
+require_once( INCLUDE_DIR . "Util.class.php" );
 
 
 class AnalyzeBestWorst
@@ -44,7 +45,7 @@ class AnalyzeBestWorst
 		foreach( $this->items as $item )
 		{
 			$box = array('title'=>$item['title'], 'package'=>$item['package'], 'best'=>$item[self::BEST_KEY], 'worst'=>$item[self::WORST_KEY]);
-			$result .= json_encode($box, JSON_UNESCAPED_UNICODE) . "\n";
+			$result .= Util::jsonEncode($box) . "\n";
 		}
 
 		$os = "unknown";
