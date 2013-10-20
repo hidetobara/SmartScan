@@ -32,8 +32,8 @@ class AnalyzeBestWorst
 				$this->items,
 				function($a, $b)
 				{
-					$av = sqrt($a[self::ALL_KEY]) * $a[self::BEST_KEY] / $a[self::WORST_KEY];
-					$bv = sqrt($a[self::ALL_KEY]) * $b[self::BEST_KEY] / $b[self::WORST_KEY];
+					$av = sqrt($a[AnalyzeBestWorst::ALL_KEY]) * $a[AnalyzeBestWorst::BEST_KEY] / $a[AnalyzeBestWorst::WORST_KEY];
+					$bv = sqrt($a[AnalyzeBestWorst::ALL_KEY]) * $b[AnalyzeBestWorst::BEST_KEY] / $b[AnalyzeBestWorst::WORST_KEY];
 					if( $av < $bv ) return 1; else return -1;
 				}
 				);
