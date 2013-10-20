@@ -21,7 +21,7 @@ class Util
 	 */
 	static function jsonEncode( $object )
 	{
-		if( ENV_TYPE == "RELASE" ){
+		if( ENV_TYPE == "RELEASE" ){
 			return json_encode( $object );
 		}else{
 			return json_encode( $object, JSON_UNESCAPED_UNICODE );
