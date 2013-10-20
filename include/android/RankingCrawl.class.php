@@ -80,11 +80,9 @@ class AndroidRankingCrawl
 			$item = new PackageInfo();
 			$item->os = "android";
 			$item->date = $this->date->format("Y-m-d H:i:s");
-
 			$item->rank = count($this->items) + 1;
 
-			$attr = $node->getAttributeNode( "data-docid" );
-			$item->package = $attr->value;
+			$item->package = $node->getAttribute( "data-docid" );
 
 			$titleNode = $xpath->query( "div/div/a[@class='title']", $node );
 			$item->title = trim( $titleNode->item(0)->nodeValue );
@@ -92,8 +90,7 @@ class AndroidRankingCrawl
 			$item->publisher = trim( $publisherNode->item(0)->nodeValue );
 
 			$imageNode = $xpath->query( "//img[@class='cover-image']" );
-			$attr = $imageNode->item(0)->getAttributeNode( "src" );
-			$item->imageUrl = $attr->value;
+			$item->image_url = $imageNode->item(0)->getAttribute( "src" );
 
 			$this->items[] = $item;
 			//var_dump($item);

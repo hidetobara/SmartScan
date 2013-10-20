@@ -37,12 +37,10 @@ class AndroidPackage
 		$xpath = new DOMXpath( $doc );
 
 		$valueNode = $xpath->query("//meta[@itemprop='ratingValue']");
-		$attr = $valueNode->item(0)->getAttributeNode("content");
-		$info->rating = $attr->value;
+		$info->rating = $valueNode->item(0)->getAttribute("content");
 
 		$countNode = $xpath->query("//meta[@itemprop='ratingCount']");
-		$attr = $countNode->item(0)->getAttributeNode("content");
-		$info->ratingCount = $attr->value;
+		$info->ratingCount = $countNode->item(0)->getAttribute("content");
 
 		$nodes = $xpath->query("//span[@class='bar-number']");
 		foreach( $nodes as $node )
