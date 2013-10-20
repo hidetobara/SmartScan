@@ -8,9 +8,9 @@ class PackageInfo
 
 	public $rank;
 	public $rating;
-	public $ratingCount;
-	public $ratingWorstCount;
-	public $ratingBestCount;
+	public $rating_count;
+	public $rating_worst_count;
+	public $rating_best_count;
 	public $title;
 	public $publisher;
 

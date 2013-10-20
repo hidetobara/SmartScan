@@ -40,14 +40,14 @@ class AndroidPackage
 		$info->rating = $valueNode->item(0)->getAttribute("content");
 
 		$countNode = $xpath->query("//meta[@itemprop='ratingCount']");
-		$info->ratingCount = $countNode->item(0)->getAttribute("content");
+		$info->rating_count = $countNode->item(0)->getAttribute("content");
 
 		$nodes = $xpath->query("//span[@class='bar-number']");
 		foreach( $nodes as $node )
 		{
 			$attr = $node->parentNode->getAttributeNode("class");
-			if( strpos($attr->value, "one") !== false ) $info->ratingWorstCount = $this->convert2number( $node->nodeValue );
-			if( strpos($attr->value, "five") !== false ) $info->ratingBestCount = $this->convert2number( $node->nodeValue );
+			if( strpos($attr->value, "one") !== false ) $info->rating_worst_count = $this->convert2number( $node->nodeValue );
+			if( strpos($attr->value, "five") !== false ) $info->rating_best_count = $this->convert2number( $node->nodeValue );
 		}
 	}
 

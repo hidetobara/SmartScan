@@ -49,7 +49,7 @@ class IosPackage
 		$countStr = $countNode->item(0)->nodeValue;
 		if( preg_match( "/\d+/", $countStr, $matches ) )
 		{
-			$info->ratingCount = (int)$matches[0];
+			$info->rating_count = (int)$matches[0];
 		}
 	}
 }

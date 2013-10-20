@@ -4,9 +4,9 @@ require_once( INCLUDE_DIR . "Util.class.php" );
 
 class AnalyzeBestWorst
 {
-	const ALL_KEY = "ratingCount";
-	const BEST_KEY = "ratingBestCount";
-	const WORST_KEY = "ratingWorstCount";
+	const ALL_KEY = "rating_count";
+	const BEST_KEY = "rating_best_count";
+	const WORST_KEY = "rating_worst_count";
 
 	private $items;
 	private $path;
