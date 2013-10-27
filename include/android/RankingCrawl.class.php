@@ -90,9 +90,6 @@ class AndroidRankingCrawl
 			$publisherNode = $xpath->query( "div/div/div/a[@class='subtitle']", $node );
 			$item->publisher = trim( $publisherNode->item(0)->nodeValue );
 
-			$imageNode = $xpath->query( "//img[@class='cover-image']" );
-			$item->image_url = $imageNode->item(0)->getAttribute( "src" );
-
 			$this->items[] = $item;
 			//var_dump($item);
 		}
@@ -100,13 +97,18 @@ class AndroidRankingCrawl
 
 	public function save()
 	{
-		$path = DATA_DIR . "android_rank/" . $this->date->format("Ymd-His") . ".json";
+		$path = $this->getPath( $this->date );
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
 		$json = Util::jsonEncode( $this->items );
 		$json = str_replace("},", "},\n", $json);
 		file_put_contents( $path, $json );
+	}
+
+	public function getPath( $date )
+	{
+		return DATA_DIR . "android_rank/" . $date->format("Ymd") . ".json";
 	}
 }
 ?>

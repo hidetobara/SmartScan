@@ -8,7 +8,7 @@ class AnalyzeBestWorst
 	const BEST_KEY = "rating_best_count";
 	const WORST_KEY = "rating_worst_count";
 
-	private $items;
+	public $items;
 	private $path;
 
 	public function run( $path )
@@ -33,7 +33,7 @@ class AnalyzeBestWorst
 				function($a, $b)
 				{
 					$av = sqrt($a[AnalyzeBestWorst::ALL_KEY]) * $a[AnalyzeBestWorst::BEST_KEY] / $a[AnalyzeBestWorst::WORST_KEY];
-					$bv = sqrt($a[AnalyzeBestWorst::ALL_KEY]) * $b[AnalyzeBestWorst::BEST_KEY] / $b[AnalyzeBestWorst::WORST_KEY];
+					$bv = sqrt($b[AnalyzeBestWorst::ALL_KEY]) * $b[AnalyzeBestWorst::BEST_KEY] / $b[AnalyzeBestWorst::WORST_KEY];
 					if( $av < $bv ) return 1; else return -1;
 				}
 				);
@@ -45,6 +45,7 @@ class AnalyzeBestWorst
 		foreach( $this->items as $item )
 		{
 			$box = array('title'=>$item['title'], 'package'=>$item['package'], 'best'=>$item[self::BEST_KEY], 'worst'=>$item[self::WORST_KEY]);
+			$box['point'] = sqrt($item[self::ALL_KEY]) * $item[self::BEST_KEY] / $item[self::WORST_KEY];
 			$result .= Util::jsonEncode($box) . "\n";
 		}
 
@@ -59,4 +60,23 @@ class AnalyzeBestWorst
 
 		file_put_contents( $path, $result );
 	}
+
+	public function pullup( DateTime $date, $os )
+	{
+		$dateStr = $date->format("Ymd");
+		$paths = glob( DATA_DIR . "bestworst/" . $dateStr . "*.{$os}.csv" );
+		if( count($paths) == 0 ) return null;
+
+		$this->items = array();
+		$this->path = $paths[0];
+		$file = fopen( $this->path, "r" );
+		while( $line = fgets($file) )
+		{
+			$item = json_decode($line, true);
+			$this->items[] = PackageInfo::parse( $item );
+		}
+		fclose( $file );
+		return $this->items;
+	}
+
 }

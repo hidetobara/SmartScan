@@ -74,12 +74,17 @@ class IosRankingCrawl
 
 	public function save()
 	{
-		$path = DATA_DIR . "ios_rank/" . $this->date->format("Ymd-His") . ".json";
+		$path = $this->getPath( $this->date );
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
 		$json = Util::jsonEncode( $this->items );
 		$json = str_replace("},", "},\n", $json);
 		file_put_contents( $path, $json );
+	}
+
+	public function getPath( $date )
+	{
+		return DATA_DIR . "ios_rank/" . $date->format("Ymd") . ".json";
 	}
 }

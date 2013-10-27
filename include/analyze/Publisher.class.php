@@ -5,8 +5,8 @@ require_once( INCLUDE_DIR . "Util.class.php" );
 class AnalyzePublisher
 {
 	private $path;
-	private $items;
-	private $table;
+	private $source;
+	private $result;
 
 	public function run( $path )
 	{
@@ -20,20 +20,21 @@ class AnalyzePublisher
 
 	private function clear()
 	{
-		$this->table = array();
+		$this->source = array();
+		$this->result = array();
 	}
 
 	private function load( $path )
 	{
 		$json = file_get_contents( $path );
-		$this->items = json_decode( $json, true );
+		$this->source = json_decode( $json, true );
 	}
 
 	private function analyze()
 	{
 		// 会社ごとに並べる
 		$table = array();
-		foreach( $this->items as $item )
+		foreach( $this->source as $item )
 		{
 			$pub = $item['publisher'];
 			$title = $item['title'];
@@ -60,7 +61,7 @@ class AnalyzePublisher
 					$bestList = $list;
 				}
 			}
-			$this->table[ $best ] = $bestList;
+			$this->result[ $best ] = $bestList;
 			unset( $table[ $best ] );
 		}
 	}
@@ -68,7 +69,7 @@ class AnalyzePublisher
 	private function save()
 	{
 		$result = "";
-		foreach( $this->table as $publisher => $list )
+		foreach( $this->result as $publisher => $list )
 		{
 			$box = array('publisher'=>$publisher, 'titles'=>$list);
 			$result .= Util::jsonEncode($box) . "\n";
@@ -84,6 +85,24 @@ class AnalyzePublisher
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
 		file_put_contents( $path, $result );
+	}
+
+	public function pullup( DateTime $date, $os )
+	{
+		$dateStr = $date->format("Ymd");
+		$paths = glob( DATA_DIR . "publisher/" . $dateStr . "*.{$os}.csv" );
+		if( count($paths) == 0 ) return null;
+
+		$this->result = array();
+		$this->path = $paths[0];
+		$file = fopen( $this->path, "r" );
+		while( $line = fgets($file) )
+		{
+			$item = json_decode($line, true);
+			$this->result[] = $item;
+		}
+		fclose( $file );
+		return $this->result;
 	}
 }
 ?>

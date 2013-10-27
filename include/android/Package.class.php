@@ -36,6 +36,9 @@ class AndroidPackage
 
 		$xpath = new DOMXpath( $doc );
 
+		$imageNode = $xpath->query( "//div[@class='cover-container']/img[@class='cover-image']" );
+		$info->image_url = $imageNode->item(0)->getAttribute( "src" );
+
 		$valueNode = $xpath->query("//meta[@itemprop='ratingValue']");
 		$info->rating = $valueNode->item(0)->getAttribute("content");
 
