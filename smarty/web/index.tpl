@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>アプリ情報局</title>
+	<title>ランキング　オブ　ランキング</title>
 	{include file='web/_common_style.tpl'}
 </head>
 <body>
