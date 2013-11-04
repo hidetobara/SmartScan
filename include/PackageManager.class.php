@@ -32,7 +32,7 @@ class PackageManager
 		}
 		if( !$path ) return $this;
 
-		$content = file_get_contents( $path );
+		$content = @file_get_contents( $path );
 		if( !$content ) return $this;
 
 		$array = json_decode( $content, true );
@@ -43,6 +43,14 @@ class PackageManager
 			$this->items[ $p->package ] = $p;
 		}
 		return $this;
+	}
+
+	public function arrayGet( array $array )
+	{
+		foreach( $array as $a )
+		{
+			if( $a instanceof PackageInfo ) $this->get( $a );
+		}
 	}
 
 	public function get( PackageInfo $p )

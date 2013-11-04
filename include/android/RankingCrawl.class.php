@@ -4,7 +4,7 @@ require_once( INCLUDE_DIR . "Util.class.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class AndroidRankingCrawl
+class AndroidRankingCrawl extends BaseRankingCrawl
 {
 	const URL_RANKING = "https://play.google.com/store/apps/collection/topgrossing?hl=ja";
 	/*
@@ -24,8 +24,11 @@ class AndroidRankingCrawl
 		$this->date = new DateTime();
 	}
 
-	public function run( $start, $num )
+	public function run()
 	{
+		$start = 0;
+		$num = 200;
+
 		while( $num > 0 )
 		{
 			if( $num >= 100 )
@@ -108,7 +111,7 @@ class AndroidRankingCrawl
 
 	public function getPath( $date )
 	{
-		return DATA_DIR . "android_rank/" . $date->format("Ymd") . ".json";
+		return DATA_DIR . "ranking/" . $date->format("Ymd") . ".android.json";
 	}
 }
 ?>

@@ -37,7 +37,7 @@ class AnalyzePublisher
 		foreach( $this->source as $item )
 		{
 			$pub = $item['publisher'];
-			$title = $item['title'];
+			$title = $item['package'];
 			if( !is_array( $table[ $pub ] ) )
 			{
 				$table[ $pub ] = array($title);
@@ -71,16 +71,12 @@ class AnalyzePublisher
 		$result = "";
 		foreach( $this->result as $publisher => $list )
 		{
-			$box = array('publisher'=>$publisher, 'titles'=>$list);
+			$box = array('publisher'=>$publisher, 'packages'=>$list);
 			$result .= Util::jsonEncode($box) . "\n";
 		}
 
-		$os = "unknown";
-		if( strpos($this->path, "android") ) $os = "android";
-		if( strpos($this->path, "ios") ) $os = "ios";
-
 		$info = pathinfo( $this->path );
-		$path = DATA_DIR . "publisher/" . $info['filename'] . ".{$os}.csv";
+		$path = DATA_DIR . "publisher/" . $info['filename'] . ".csv";
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 

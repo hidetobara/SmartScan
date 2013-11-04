@@ -6,12 +6,13 @@
 </head>
 <body>
 
-アプリの情報
+{include file='web/_top_bar.tpl'}
+
+注目の高評価アプリ
 {foreach from=$best_packages key=index item=item}
-	<div>
-		<img src="{$item->image_url}" class="fixed_cell"> <span> {$index+1}. </span> <span> {$item->title} </span> <span>{$item->point} point.</span>
-	</div>
+	{include file='web/_package_info.tpl' _info=$item _number=$index+1}
 {/foreach}
+
 
 </body>
 </html>

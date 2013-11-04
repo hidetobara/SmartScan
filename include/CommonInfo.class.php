@@ -73,4 +73,24 @@ class PackageInfo
 	}
 }
 
+abstract class BaseRankingCrawl
+{
+	abstract function run();
+	abstract function save();
+
+	public function load( $date )
+	{
+		$path = $this->getPath( $date );
+		$content = file_get_contents( $path );
+		$items = Util::jsonDecode( $content );
+
+		$this->items = array();
+		foreach( $items as $item )
+		{
+			$this->items[] = PackageInfo::parse( $item );
+		}
+		return $this->items;
+	}
+}
+
 ?>

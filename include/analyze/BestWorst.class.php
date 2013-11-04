@@ -49,12 +49,8 @@ class AnalyzeBestWorst
 			$result .= Util::jsonEncode($box) . "\n";
 		}
 
-		$os = "unknown";
-		if( strpos($this->path, "android") ) $os = "android";
-		if( strpos($this->path, "ios") ) $os = "ios";
-
 		$info = pathinfo( $this->path );
-		$path = DATA_DIR . "bestworst/" . $info['filename'] . ".{$os}.csv";
+		$path = DATA_DIR . "bestworst/" . $info['filename'] . ".csv";
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 

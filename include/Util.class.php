@@ -6,13 +6,13 @@ class Util
 {
 	static function getAndroidLastRankingPath()
 	{
-		$paths = glob( DATA_DIR . "android_rank/*.json" );
+		$paths = glob( DATA_DIR . "ranking/*.android.json" );
 		return $paths[ count($paths)-1 ];
 	}
 
 	static function getIosLastRankingPath()
 	{
-		$paths = glob( DATA_DIR . "ios_rank/*.json" );
+		$paths = glob( DATA_DIR . "ranking/*.ios.json" );
 		return $paths[ count($paths)-1 ];
 	}
 
@@ -26,6 +26,10 @@ class Util
 		}else{
 			return json_encode( $object, JSON_UNESCAPED_UNICODE );
 		}
+	}
+	static function jsonDecode( $string )
+	{
+		return json_decode( $string, true );
 	}
 }
 

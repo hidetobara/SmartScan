@@ -4,7 +4,7 @@ require_once( INCLUDE_DIR . "Util.class.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class IosRankingCrawl
+class IosRankingCrawl extends BaseRankingCrawl
 {
 	const URL_RANKING = "https://itunes.apple.com/jp/rss/topgrossingapplications/limit=200/xml";
 
@@ -85,6 +85,6 @@ class IosRankingCrawl
 
 	public function getPath( $date )
 	{
-		return DATA_DIR . "ios_rank/" . $date->format("Ymd") . ".json";
+		return DATA_DIR . "ranking/" . $date->format("Ymd") . ".ios.json";
 	}
 }

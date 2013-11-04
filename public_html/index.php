@@ -2,6 +2,7 @@
 require_once( "../configure.php" );
 
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
+require_once( INCLUDE_DIR . "web/Pager.class.php" );
 require_once( INCLUDE_DIR . "analyze/BestWorst.class.php" );
 require_once( INCLUDE_DIR . "PackageManager.class.php" );
 
@@ -16,7 +17,6 @@ class IndexWeb extends BaseWeb
 
 	function handle()
 	{
-		$today = new DateTime("2013/10/27");
 		$today = new DateTime();
 
 		$packager = new PackageManager();
@@ -24,11 +24,12 @@ class IndexWeb extends BaseWeb
 
 		$analyze = new AnalyzeBestWorst();
 		$items = $analyze->pullup( $today, OS_ANDROID );
-		foreach( $items as $item )
+		if( $items )
 		{
-			$packager->get( $item );
+			$pager = new Pager( $items, 5 );
+			$packager->arrayGet( $pager->currentItems );
+			$this->assign( "best_packages", $pager->currentItems );
 		}
-		$this->assign( "best_packages", $items );
 	}
 }
 $web = new IndexWeb();
