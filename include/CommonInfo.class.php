@@ -46,6 +46,7 @@ class PackageInfo
 
 		$this->image_url = $a['image_url'];
 		$this->detail_url = $a['detail_url'];
+		if( $this->os == OS_ANDROID ) $this->detail_url = "https://play.google.com/store/apps/details?id=" . $this->package;
 
 		$this->point = $a['point'];
 	}
@@ -71,6 +72,9 @@ class PackageInfo
 
 		if( $p->point ) $this->point = $p->point;
 	}
+
+	public function isAndroid(){ return $this->os == OS_ANDROID; }
+	public function isIos(){ return $this->os == OS_IOS; }
 }
 
 abstract class BaseRankingCrawl

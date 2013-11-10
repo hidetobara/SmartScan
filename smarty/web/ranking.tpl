@@ -8,14 +8,9 @@
 
 {include file='web/_top_bar.tpl'}
 
-<form method="GET" action="./ranking.php">
-	OS:<select name="os">
-		<option>Android</option>
-		<option>iOS</option>
-	</select>
-	日時:<input type="date" name="date" value="{$date_str}" />
-	<input type="submit" value="Show" />
-</form>
+{include file='web/_date_select.tpl' _action="./ranking.php" _date_str=$date}
+
+<p>※200位までの集計となります</p>
 
 アプリの情報
 {foreach from=$packages key=index item=item}

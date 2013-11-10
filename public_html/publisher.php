@@ -9,26 +9,36 @@ require_once( INCLUDE_DIR . "PackageManager.class.php" );
 
 class PublisherWeb extends BaseWeb
 {
+	private $os;
+	private $date;
+
 	function __construct( $opt=null )
 	{
 		parent::__construct( $opt );
 		$this->template = 'publisher.tpl';
+
 	}
 
 	function handle()
 	{
-		$this->handleByOs( OS_ANDROID );
-		$this->handleByOs( OS_IOS );
+		$this->date = new DateTime( $_REQUEST['date'] );
+		$this->assign( "date", $this->date->format("Y-m-d") );
+
+		$this->os = strtolower( $_REQUEST['os'] );
+		if( OS_ANDROID == $this->os ) $this->handleByOs( OS_ANDROID );
+		else if( OS_IOS == $this->os ) $this->handleByOs( OS_IOS );
+		else $this->os = null;
+
+		$this->assign( "os", $this->os );
 	}
 
 	private function handleByOs( $os )
 	{
-		$today = new DateTime();
 		$packager = new PackageManager();
-		$packager->load( $today, $os );
+		$packager->load( $this->date, $os );
 
 		$analyze = new AnalyzePublisher();
-		$items = $analyze->pullup( $today, $os );
+		$items = $analyze->pullup( $this->date, $os );
 		if( !$items ) return;
 
 		$pager = new Pager( $items, 30 );
@@ -45,7 +55,7 @@ class PublisherWeb extends BaseWeb
 			$out[] = array('publisher'=>mb_substr($pubisher, 0, 16) , 'packages'=>$packages, 'count'=>count($packages));
 		}
 
-		$this->assign( "{$os}_publishers", $out );	//var_dump($out);
+		$this->assign( "publishers", $out );
 	}
 }
 $web = new PublisherWeb();

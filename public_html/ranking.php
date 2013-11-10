@@ -48,7 +48,8 @@ class RankingWeb extends BaseWeb
 			$this->assign( "packages", $crawl->items );
 		}
 
-		$this->assign( "date_str", $this->date->format("Y-m-d") );
+		$this->assign( "date", $this->date->format("Y-m-d") );
+		$this->assign( "os", $this->os );
 	}
 }
 $web = new RankingWeb();

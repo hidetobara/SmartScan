@@ -6,7 +6,9 @@
 *****}
 	<div>
 		<div class="floating_cell">
-			<img src="{$_info->image_url}" class="fixed_cell" />
+			<a href="{$_info->detail_url}">
+				<img src="{$_info->image_url}" class="fixed_cell" />
+			</a>
 		</div>
 		<div class="floating_cell">
 			{if $_number}

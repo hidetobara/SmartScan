@@ -32,6 +32,8 @@ class AnalyzeBestWorst
 				$this->items,
 				function($a, $b)
 				{
+					if( !$a[AnalyzeBestWorst::WORST_KEY] ) $a[AnalyzeBestWorst::WORST_KEY] = 1;
+					if( !$b[AnalyzeBestWorst::WORST_KEY] ) $b[AnalyzeBestWorst::WORST_KEY] = 1;
 					$av = sqrt($a[AnalyzeBestWorst::ALL_KEY]) * $a[AnalyzeBestWorst::BEST_KEY] / $a[AnalyzeBestWorst::WORST_KEY];
 					$bv = sqrt($b[AnalyzeBestWorst::ALL_KEY]) * $b[AnalyzeBestWorst::BEST_KEY] / $b[AnalyzeBestWorst::WORST_KEY];
 					if( $av < $bv ) return 1; else return -1;
@@ -45,6 +47,7 @@ class AnalyzeBestWorst
 		foreach( $this->items as $item )
 		{
 			$box = array('title'=>$item['title'], 'package'=>$item['package'], 'best'=>$item[self::BEST_KEY], 'worst'=>$item[self::WORST_KEY]);
+			if( !$item[self::WORST_KEY] ) $item[self::WORST_KEY] = 1;
 			$box['point'] = sqrt($item[self::ALL_KEY]) * $item[self::BEST_KEY] / $item[self::WORST_KEY];
 			$result .= Util::jsonEncode($box) . "\n";
 		}
