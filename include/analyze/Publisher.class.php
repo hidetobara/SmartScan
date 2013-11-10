@@ -83,7 +83,7 @@ class AnalyzePublisher
 		file_put_contents( $path, $result );
 	}
 
-	public function pullup( DateTime $date, $os )
+	public function pickup( DateTime $date, $os )
 	{
 		$dateStr = $date->format("Ymd");
 		$paths = glob( DATA_DIR . "publisher/" . $dateStr . "*.{$os}.csv" );

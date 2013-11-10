@@ -16,7 +16,6 @@ class PublisherWeb extends BaseWeb
 	{
 		parent::__construct( $opt );
 		$this->template = 'publisher.tpl';
-
 	}
 
 	function handle()
@@ -38,7 +37,7 @@ class PublisherWeb extends BaseWeb
 		$packager->load( $this->date, $os );
 
 		$analyze = new AnalyzePublisher();
-		$items = $analyze->pullup( $this->date, $os );
+		$items = $analyze->pickup( $this->date, $os );
 		if( !$items ) return;
 
 		$pager = new Pager( $items, 30 );

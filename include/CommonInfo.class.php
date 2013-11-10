@@ -21,11 +21,19 @@ class PackageInfo
 
 	public static function parse( $a )
 	{
-		if( !is_array($a) ) return null;
-
-		$i = new PackageInfo();
-		$i->retrieve( $a );
-		return $i;
+		if( $a instanceof PackageInfo )
+		{
+			$i = new PackageInfo();
+			$i->copy( $a );
+			return $i;
+		}
+		if( is_array($a) )
+		{
+			$i = new PackageInfo();
+			$i->retrieve( $a );
+			return $i;
+		}
+		return null;
 	}
 
 	public function retrieve( $a )

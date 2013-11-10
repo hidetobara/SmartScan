@@ -23,7 +23,7 @@ class IndexWeb extends BaseWeb
 		$packager->load( $today, OS_ANDROID );
 
 		$analyze = new AnalyzeBestWorst();
-		$items = $analyze->pullup( $today, OS_ANDROID );
+		$items = $analyze->pickup( $today, OS_ANDROID );
 		if( $items )
 		{
 			$pager = new Pager( $items, 5 );
