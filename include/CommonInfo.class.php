@@ -93,8 +93,9 @@ abstract class BaseRankingCrawl
 	public function load( $date )
 	{
 		$path = $this->getPath( $date );
-		$content = file_get_contents( $path );
+		$content = @file_get_contents( $path );
 		$items = Util::jsonDecode( $content );
+		if( !$items ) return array();
 
 		$this->items = array();
 		foreach( $items as $item )
