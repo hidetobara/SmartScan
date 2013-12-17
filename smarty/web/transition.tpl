@@ -29,7 +29,7 @@
 					]
 				};
 
-				$.getJSON('trans-package.php?package={$package}', function(data) {
+				$.getJSON('trans-package.php?package={$package}&os={$os}', function(data) {
 					options.xAxis.categories = data.categories;
 					options.series = data.series;
 					var chart = new Highcharts.Chart(options);

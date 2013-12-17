@@ -23,7 +23,7 @@
 				<span> {(int)$_info->point} point. </span><br />
 			{/if}
 
-			<span><a href="transition.php?package={$_info->package}"> trans &gt;&gt;&gt; </a></span>
+			<span><a href="transition.php?package={$_info->package}&amp;os={$_info->os}"> trans &gt;&gt;&gt; </a></span>
 		</div>
 		<div class="clear">
 		</div>

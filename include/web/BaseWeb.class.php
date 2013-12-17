@@ -15,9 +15,11 @@ class BaseWeb
 		$this->assigned = array();
 
 		$this->assignHash( array(
-			'HOME_URL' => HOME_URL,
 			'ENV_TYPE' => ENV_TYPE,
-			'API_URL' => API_URL ) );
+			'HOME_URL' => HOME_URL,
+			'API_URL' => API_URL,
+			'ROOT_DIR' => ROOT_DIR,
+			'DATA_DIR' => DATA_DIR ) );
 
 		$this->templateGroup = 'web';
 		$this->template = 'error.tpl';
@@ -53,6 +55,22 @@ class BaseWeb
 		$this->finalize();
 	}
 
+	protected function getRequest()
+	{
+		return $this->safeStrip( $_REQUEST );
+	}
+
+	private function safeStrip( $array )
+	{
+		$out = array();
+		foreach( $array as $key => $value )
+		{
+			if( is_string($value) ) $out[ $key ] = strip_tags( $value );
+			else if( is_array($value) ) $out[ $key ] = $this->safeStrip( $value );
+		}
+		return $out;
+	}
+
 	protected function initialize()
 	{
 		//ページの出力は基本禁止、COOKIE は可
@@ -75,7 +93,7 @@ class BaseWeb
 		$smarty->template_dir = SMARTY_TEMPLATE_DIR;
 		$smarty->compile_dir  = SMARTY_WORK_DIR . 'templates_c/';
 		$smarty->cache_dir    = SMARTY_WORK_DIR . 'cache/';
-		$smarty->plugins_dir[] = SMARTY_TEMPLATE_DIR . 'plugins/';
+		$smarty->plugins_dir = array( 'plugins/', SMARTY_TEMPLATE_DIR . 'plugins/' );
 		$smarty->assign( $this->assigned );
 
 		$path = SMARTY_TEMPLATE_DIR . $this->templateGroup . '/' . $this->template;

@@ -8,8 +8,7 @@ class PackageTransition
 	function pickup( PackageInfo $info, DateTime $from, DateTime $to )
 	{
 		$packager = new PackageManager();
-		$iphones = array();
-		$androids = array();
+		$ranks = array();
 		$categories = array();
 
 		for( $date = clone($from); $date <= $to; $date->modify("+1 day")  )
@@ -17,14 +16,14 @@ class PackageTransition
 			$categories[] = $date->format("Y-m-d");
 
 			$info->rank = null;
-			$info = $packager->load( $date, OS_ANDROID )->get( $info );
-			$androids[] = $info->rank;
-
-			$info->rank = null;
-			$info = $packager->load( $date, OS_IOS )->get( $info );
-			$iphones[] = $info->rank;
+			$info = $packager->load( $date, $info->os )->get( $info );
+			$ranks[] = $info->rank;
 		}
+
+		if( $info->os == OS_ANDROID ) $os = "Android";
+		if( $info->os == OS_IOS ) $os = "iOS";
+
 		return array( 'categories'=>$categories,
-				'series'=>array( array('name'=>'Android','data'=>$androids),array('name'=>'iPhone','data'=>$iphones)) );
+				'series'=>array( array('name'=>$os,'data'=>$ranks) ) );
 	}
 }

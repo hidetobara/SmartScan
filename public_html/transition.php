@@ -14,7 +14,9 @@ class TransWeb extends BaseWeb
 
 	function handle()
 	{
-		$this->assign('package', (string)$_REQUEST['package']);
+		$r = $this->getRequest();
+		$this->assign('os', $r['os'] );
+		$this->assign('package', $r['package']);
 	}
 }
 $web = new TransWeb();

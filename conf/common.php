@@ -11,7 +11,6 @@ if( ENV_TYPE == 'RELEASE' ){
 	define( 'ROOT_DIR', 'C:/develop/xampp/htdocs/SmartScan/' );
 	define( 'SMARTY_DIR', 'C:/develop/Smarty-3.1.12/libs/' );
 
-
 }else{
 	print( "Check ENV_TYPE !" );
 	exit;
@@ -20,6 +19,7 @@ if( ENV_TYPE == 'RELEASE' ){
 define( 'OS_ANDROID', 'android' );
 define( 'OS_IOS', 'ios' );
 
+define( 'HOME_DIR', ROOT_DIR . 'public_html/' );
 define( 'CONF_DIR', ROOT_DIR . 'conf/' );
 define( 'INCLUDE_DIR', ROOT_DIR . 'include/' );
 define( 'LOG_DIR', ROOT_DIR . 'log/' );

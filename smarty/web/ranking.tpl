@@ -8,6 +8,10 @@
 
 {include file='web/_top_bar.tpl'}
 
+<div align='center'>
+	{base64image url='img/apple.png' style=''}
+</div>
+
 {include file='web/_date_select.tpl' _action="./ranking.php" _date_str=$date}
 
 <p>※200位までの集計となります</p>

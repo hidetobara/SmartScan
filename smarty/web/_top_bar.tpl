@@ -5,6 +5,6 @@
 	<a href="./">Top</a>
 	&nbsp;<a href="ranking.php">Ranking</a>
 	&nbsp;<a href="publisher.php">Publisher</a>
-	&nbsp;<a href="transition.php">Transition</a>
+{***	&nbsp;<a href="transition.php">Transition</a>	***}
 </div>
 <br />
