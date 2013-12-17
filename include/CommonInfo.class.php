@@ -40,7 +40,7 @@ class PackageInfo
 	{
 		if( !is_array($a) ) return;
 
-		$this->os = $a['os'];
+		$this->os = strtolower( $a['os'] );
 		$this->date = new DateTime( $a['date'] );
 		$this->package = $a['package'];
 
