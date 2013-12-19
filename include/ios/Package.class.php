@@ -3,7 +3,7 @@ require_once( "HTTP/Request2.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class IosPackage
+class IosPackage extends BasePackage
 {
 	//	const URL_RANKING = "https://itunes.apple.com/jp/app/kuizurpg-mo-fa-shiito-hei/id621106129?mt=8&uo=2";
 
@@ -11,6 +11,7 @@ class IosPackage
 	{
 		$html = $this->download( $info );
 		$this->retrieve( $info, $html );
+		$this->downloadImage( $info );
 	}
 
 	private function download( PackageInfo $info )

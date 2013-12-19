@@ -6,6 +6,7 @@ data/*
 batch/*.log
 conf/local.php
 
+public_html/icon/*
 smarty_work/
 
 !/.gitignore

@@ -3,7 +3,7 @@ require_once( "HTTP/Request2.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class AndroidPackage
+class AndroidPackage extends BasePackage
 {
 	const URL_PACKAGE = "https://play.google.com/store/apps/details?id=%s&hl=ja";
 
@@ -11,6 +11,7 @@ class AndroidPackage
 	{
 		$html = $this->download( $info );
 		$this->retrieve( $info, $html );
+		$this->downloadImage( $info );
 	}
 
 	private function download( PackageInfo $info )

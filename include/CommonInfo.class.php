@@ -1,5 +1,8 @@
 <?php
 
+/*
+ * パッケージ情報
+ */
 class PackageInfo
 {
 	public $os;
@@ -85,6 +88,9 @@ class PackageInfo
 	public function isIos(){ return $this->os == OS_IOS; }
 }
 
+/*
+ * クローラーの基本部分
+ */
 abstract class BaseRankingCrawl
 {
 	abstract function run();
@@ -106,4 +112,33 @@ abstract class BaseRankingCrawl
 	}
 }
 
+/*
+ * パッケージャーの基本部分
+ */
+abstract class BasePackage
+{
+	public function downloadImage( PackageInfo $info )
+	{
+		if( !$info || !$info->image_url ) return false;
+
+		$path = HOME_DIR . "icon/" . $info->os . "/" . $info->package . ".png";
+		$dir = dirname( $path );
+		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
+
+		$request = new HTTP_Request2( $info->image_url, HTTP_Request2::METHOD_GET);
+		$request->setConfig('ssl_verify_peer', false);
+		$request->setConfig('ssl_verify_host', false);
+
+		$response = $request->send();
+		if($response->getStatus() != 200){
+			//var_dump($response);	// とれない時はあきらめる
+			return false;
+		}
+		$data = $response->getBody();
+		if( !$data ) return false;
+
+		file_put_contents( $path, $data );
+		return true;
+	}
+}
 ?>
