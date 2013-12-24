@@ -19,6 +19,7 @@ class PackageInfo
 
 	public $image_url;
 	public $detail_url;
+	public $image_cache;
 
 	public $point;
 
@@ -55,9 +56,10 @@ class PackageInfo
 		$this->title = $a['title'];
 		$this->publisher = $a['publisher'];
 
-		$this->image_url = $a['image_url'];
+		$this->image_url = $a['image_url'];	// direct url of image
 		$this->detail_url = $a['detail_url'];
 		if( $this->os == OS_ANDROID ) $this->detail_url = "https://play.google.com/store/apps/details?id=" . $this->package;
+		$this->image_cache = "icon/" . $this->os . "/" . $this->package . ".png";	// cache of image
 
 		$this->point = $a['point'];
 	}

@@ -7,7 +7,7 @@
 	<div>
 		<div class="floating_cell">
 			<a href="{$_info->detail_url}">
-				<img src="{$_info->image_url}" class="fixed_cell" />
+				<img src="{$HOME_URL}{$_info->image_cache}" class="fixed_cell" />
 			</a>
 		</div>
 		<div class="floating_cell">

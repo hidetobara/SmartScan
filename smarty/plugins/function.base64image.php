@@ -5,7 +5,8 @@ require_once( "../configure.php" );
 function smarty_function_base64image($params, $template)
 {
 	$url = HOME_DIR . $params['url'];
-	$style = $params['style'];
+	$styletag = $params['style'] ? "style='" . $params['style'] . "'" : "";
+	$classtag = $params['class'] ? "class='" . $params['class'] . "'" : "";
 	$context = @file_get_contents( $url );
 	if( !$context ) return "<img error='not found' />";
 
@@ -15,6 +16,6 @@ function smarty_function_base64image($params, $template)
 	else if( $ext == "jpg" || $ext == "jpeg" ) { $ext = "jpeg"; }
 	else return "<img error='unknown extension' />";
 
-	return "<img style='{$style}' src='data:image/{$ext};base64," . base64_encode( $context ) . "'>";
+	return "<img {$classtag} {$styletag} src='data:image/{$ext};base64," . base64_encode( $context ) . "'>";
 }
 ?>
