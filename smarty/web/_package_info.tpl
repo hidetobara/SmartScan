@@ -8,10 +8,10 @@
 	<div>
 		<div class="floating_cell">
 			<a href="{$_info->detail_url}">
-				{if _is_embed}
-					{base64image url=$_info->image_cache class="fixed_cell"}
-				{else}
+				{if !$_is_embed}
 					<img src="{$HOME_URL}{$_info->image_cache}" class="fixed_cell" />
+				{else}
+					{base64image url=$_info->image_cache class="fixed_cell"}
 				{/if}
 			</a>
 		</div>
