@@ -1,18 +1,23 @@
 {*****
 	1package表示
 	引数:
-		_info
-		_number
+		_info: パッケージ情報
+		_number: 順位、マイナスにすると表示しない
+		_is_embed: 埋め込み画像か
 *****}
 	<div>
 		<div class="floating_cell">
 			<a href="{$_info->detail_url}">
-				<img src="{$HOME_URL}{$_info->image_cache}" class="fixed_cell" />
+				{if _is_embed}
+					{base64image url=$_info->image_cache class="fixed_cell"}
+				{else}
+					<img src="{$HOME_URL}{$_info->image_cache}" class="fixed_cell" />
+				{/if}
 			</a>
 		</div>
 		<div class="floating_cell">
 			{if $_number}
-				<span> {$_number}. </span><br />
+				{if $_number > 0}<span class='rank'> {$_number}. </span><br />{/if}
 			{elseif $_info->rank}
 				<span> {$_info->rank}. </span><br />
 			{/if}

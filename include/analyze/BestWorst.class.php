@@ -72,6 +72,7 @@ class AnalyzeBestWorst
 		while( $line = fgets($file) )
 		{
 			$item = json_decode($line, true);
+			$item['os'] = $os;
 			$this->items[] = PackageInfo::parse( $item );
 		}
 		fclose( $file );
