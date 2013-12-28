@@ -17,7 +17,7 @@ class IndexWeb extends BaseWeb
 
 	function handle()
 	{
-		$today = new DateTime();
+		$today = new DateTime("-1 hour");
 
 		$packager = new PackageManager();
 		$packager->load( $today, OS_ANDROID );

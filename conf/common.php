@@ -1,13 +1,11 @@
 <?php
 if( ENV_TYPE == 'RELEASE' ){
-	define( 'HOME_URL', 'http://baraoto.sakura.ne.jp/SmartScan/public_html/' );
-	define( 'API_URL', 'http://baraoto.sakura.ne.jp/SmartScan/public_api/' );
+	define( 'HOME_URL', 'http://49.212.141.20/SmartScan/' );
 	define( 'ROOT_DIR', '/home/baraoto/SmartScan/' );
 	define( 'SMARTY_DIR', '/home/baraoto/Smarty-3.1.12/libs/' );
 
 }else if( ENV_TYPE == 'DEVELOP' ){
 	define( 'HOME_URL', 'http://127.0.0.1/SmartScan/public_html/' );
-	define( 'API_URL', 'http://127.0.0.1/SmartScan/public_api/' );
 	define( 'ROOT_DIR', 'C:/develop/xampp/htdocs/SmartScan/' );
 	define( 'SMARTY_DIR', 'C:/develop/Smarty-3.1.12/libs/' );
 
