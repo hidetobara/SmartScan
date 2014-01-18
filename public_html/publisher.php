@@ -47,7 +47,7 @@ class PublisherWeb extends BaseWeb
 			$pubisher = $item['publisher'];
 			$packages = array();
 			foreach( $item['packages'] as $p ){
-				$i = PackageInfo::parse( array('package'=>$p) );
+				$i = PackageInfo::parse( array('os'=>$os, 'package'=>$p) );
 				$packager->get($i);
 				$packages[] = $i;
 			}
