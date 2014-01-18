@@ -19,7 +19,7 @@
 	{foreach from=$publisher.packages key=index item=info}
 		<div class="floating_box">
 			<a href="{$info->detail_url}">
-				<img src="{$info->image_url}" class="fixed_cell" />
+				<img src="{$HOME_URL}{$_info->image_cache}" class="fixed_cell" />
 			</a>
 		</div>
 	{/foreach}
