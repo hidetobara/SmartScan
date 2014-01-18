@@ -50,7 +50,7 @@ class IosRankingCrawl extends BaseRankingCrawl
 		foreach( $nodes as $node )
 		{
 			$i = new PackageInfo();
-			$i->os = "iOS";
+			$i->os = OS_IOS;
 			$i->date = $this->date->format("Y-m-d H:i:s");
 			$i->rank = count($this->items) + 1;
 
