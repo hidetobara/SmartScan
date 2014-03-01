@@ -1,35 +1,37 @@
 <?php
 require_once( '../configure.php' );
 require_once( INCLUDE_DIR . "android/RankingCrawl.class.php" );
-require_once( INCLUDE_DIR . "android/Package.class.php" );
+require_once( INCLUDE_DIR . "android/Detail.class.php" );
 require_once( INCLUDE_DIR . "ios/RankingCrawl.class.php" );
-require_once( INCLUDE_DIR . "ios/Package.class.php" );
+require_once( INCLUDE_DIR . "ios/Detail.class.php" );
 
 
 if(true)
 {
-	$crawl = new AndroidRankingCrawl();
-	$crawl->run( 0, 200 );
-	$package = new AndroidPackage();
-	foreach( $crawl->items as $item )
+	$ranking = new AndroidRankingCrawl();
+	$infos = $ranking->run( 0, 200 );
+
+	$package = new AndroidDetailCrawl();
+	foreach( $infos as $info )
 	{
-		$package->run( $item );
+		$package->run( $info );
+		$info->save();
 		sleep(1);
 	}
-	$crawl->save();
 }
 
-if(true)
+if(false)
 {
 	$crawl = new IosRankingCrawl();
-	$crawl->run();
-	$package = new IosPackage();
-	foreach( $crawl->items as $item )
+	$infos = $crawl->run();
+
+	$package = new IosDetailCrawl();
+	foreach( $infos as $info )
 	{
-		$package->run( $item );
+		$package->run( $info );
+		$info->save();
 		sleep(1);
 	}
-	$crawl->save();
 }
 
 ?>

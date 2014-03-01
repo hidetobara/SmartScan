@@ -1,72 +1,44 @@
 <?php
 require_once( INCLUDE_DIR . "Util.class.php" );
+require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
 
 
 class AnalyzePublisher
 {
-	private $path;
-	private $source;
+	private $date;
+	private $os;
 	private $result;
 
-	public function run( $path )
+	public function run( DateTime $date, $os )
 	{
-		$this->path = $path;
+		$this->date = $date;
+		$this->os = $os;
 
-		$this->clear();
-		$this->load( $path );
-		$this->analyze();
-		$this->save();
+		$this->calculate();
+		$this->saveToJson();
 	}
 
-	private function clear()
+	private function calculate()
 	{
-		$this->source = array();
 		$this->result = array();
-	}
 
-	private function load( $path )
-	{
-		$json = file_get_contents( $path );
-		$this->source = json_decode( $json, true );
-	}
+		$table = RankingTable::Factory();
+		$items = $table->sortByPublisherCount( $this->date, $this->os );
 
-	private function analyze()
-	{
-		// 会社ごとに並べる
-		$table = array();
-		foreach( $this->source as $item )
+		foreach( $items as $item )
 		{
-			$pub = $item['publisher'];
-			$title = $item['package'];
-			if( !is_array( $table[ $pub ] ) )
-			{
-				$table[ $pub ] = array($title);
-			}
-			else
-			{
-				$table[ $pub ][] = $title;
-			}
-		}
+			if( (int)$item[1] <= 1 ) continue;
 
-		// ソート
-		while( count($table) > 0 )
-		{
-			$best = null;
-			$bestList = null;
-			foreach( $table as $pub => $list )
-			{
-				if($best == null || count($list) > count($bestList) )
-				{
-					$best = $pub;
-					$bestList = $list;
-				}
-			}
-			$this->result[ $best ] = $bestList;
-			unset( $table[ $best ] );
+			$base = new PackageInfo();
+			$base->publisher = $item[0];
+			$base->os = $this->os;
+			$infos = $table->selectByPublisher( $base, $this->date );
+
+			foreach( $infos as $info ) $this->result[ $base->publisher ][] = $info->package;
 		}
 	}
 
-	private function save()
+	private function saveToJson()
 	{
 		$result = "";
 		foreach( $this->result as $publisher => $list )
@@ -75,30 +47,29 @@ class AnalyzePublisher
 			$result .= Util::jsonEncode($box) . "\n";
 		}
 
-		$info = pathinfo( $this->path );
-		$path = DATA_DIR . "publisher/" . $info['filename'] . ".csv";
+		$path = DATA_DIR . "publisher/" . $this->date->format("Ymd") . "." . $this->os . ".csv";
 		$dir = dirname( $path );
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
 		file_put_contents( $path, $result );
 	}
 
-	public function pickup( DateTime $date, $os )
+	public function loadFromJson( DateTime $date, $os )
 	{
 		$dateStr = $date->format("Ymd");
 		$paths = glob( DATA_DIR . "publisher/" . $dateStr . "*.{$os}.csv" );
 		if( count($paths) == 0 ) return null;
 
-		$this->result = array();
+		$result = array();
 		$this->path = $paths[0];
 		$file = fopen( $this->path, "r" );
 		while( $line = fgets($file) )
 		{
 			$item = json_decode($line, true);
-			$this->result[] = $item;
+			$result[] = $item;
 		}
 		fclose( $file );
-		return $this->result;
+		return $result;
 	}
 }
 ?>

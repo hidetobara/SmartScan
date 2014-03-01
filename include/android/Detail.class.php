@@ -3,7 +3,7 @@ require_once( "HTTP/Request2.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class AndroidPackage extends BasePackage
+class AndroidDetailCrawl extends BasePackageCrawl
 {
 	const URL_PACKAGE = "https://play.google.com/store/apps/details?id=%s&hl=ja";
 
@@ -36,6 +36,12 @@ class AndroidPackage extends BasePackage
 		@$doc->loadHTML( '<?xml encoding="UTF-8">' . $html );
 
 		$xpath = new DOMXpath( $doc );
+
+		$titleNode = $xpath->query( "//div[@class='document-title']/div" );
+		$info->title = $titleNode->item(0)->nodeValue;
+
+		$publishNode = $xpath->query( "//a[@class='document-subtitle primary']/span" );
+		$info->publisher = $publishNode->item(0)->nodeValue;
 
 		$imageNode = $xpath->query( "//div[@class='cover-container']/img[@class='cover-image']" );
 		$info->image_url = $imageNode->item(0)->getAttribute( "src" );

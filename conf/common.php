@@ -9,6 +9,11 @@ if( ENV_TYPE == 'RELEASE' ){
 	define( 'ROOT_DIR', 'C:/develop/xampp/htdocs/SmartScan/' );
 	define( 'SMARTY_DIR', 'C:/develop/Smarty-3.1.12/libs/' );
 
+	define( 'DB_NAME', 'smart_scan' );
+	define( 'DB_HOST', '127.0.0.1' );
+	define( 'DB_USERNAME', 'root' );
+	define( 'DB_PASSWORD', '' );
+
 }else{
 	print( "Check ENV_TYPE !" );
 	exit;

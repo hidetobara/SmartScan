@@ -20,7 +20,7 @@ class IosRankingCrawl extends BaseRankingCrawl
 	{
 		$html = $this->download();
 		$this->retrieve( $html );
-		//$this->save();
+		return $this->items;
 	}
 
 	private function download()
@@ -51,7 +51,7 @@ class IosRankingCrawl extends BaseRankingCrawl
 		{
 			$i = new PackageInfo();
 			$i->os = OS_IOS;
-			$i->date = $this->date->format("Y-m-d H:i:s");
+			$i->date = clone($this->date);
 			$i->rank = count($this->items) + 1;
 
 			$packageNode = $xpath->query("id", $node);

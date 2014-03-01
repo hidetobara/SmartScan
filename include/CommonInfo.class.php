@@ -1,7 +1,7 @@
 <?php
 
 /*
- * パッケージ情報
+ * アプリのパッケージ情報
  */
 class PackageInfo
 {
@@ -69,7 +69,7 @@ class PackageInfo
 		if( $p == null ) return;
 
 		if( $p->os ) $this->os = $p->os;
-		if( $p->date ) $this->date = $p->date;
+		if( $p->date ) $this->date = clone($p->date);
 		if( $p->package ) $this->package = $p->package;
 
 		if( $p->rank ) $this->rank = $p->rank;
@@ -88,6 +88,12 @@ class PackageInfo
 
 	public function isAndroid(){ return $this->os == OS_ANDROID; }
 	public function isIos(){ return $this->os == OS_IOS; }
+
+	public function save()
+	{
+		$table = RankingTable::Factory();
+		$table->insert($this);
+	}
 }
 
 /*
@@ -117,7 +123,7 @@ abstract class BaseRankingCrawl
 /*
  * パッケージャーの基本部分
  */
-abstract class BasePackage
+abstract class BasePackageCrawl
 {
 	public function downloadImage( PackageInfo $info )
 	{

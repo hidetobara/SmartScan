@@ -3,7 +3,7 @@ require_once( "HTTP/Request2.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
 
 
-class IosPackage extends BasePackage
+class IosDetailCrawl extends BasePackageCrawl
 {
 	//	const URL_RANKING = "https://itunes.apple.com/jp/app/kuizurpg-mo-fa-shiito-hei/id621106129?mt=8&uo=2";
 

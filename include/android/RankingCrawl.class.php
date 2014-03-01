@@ -2,7 +2,7 @@
 require_once( "HTTP/Request2.php" );
 require_once( INCLUDE_DIR . "Util.class.php" );
 require_once( INCLUDE_DIR . "CommonInfo.class.php" );
-
+require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
 
 class AndroidRankingCrawl extends BaseRankingCrawl
 {
@@ -48,6 +48,7 @@ class AndroidRankingCrawl extends BaseRankingCrawl
 			$start += $count;
 		}
 		//$this->save();
+		return $this->items;
 	}
 
 	/*
@@ -83,15 +84,10 @@ class AndroidRankingCrawl extends BaseRankingCrawl
 		{
 			$item = new PackageInfo();
 			$item->os = "android";
-			$item->date = $this->date->format("Y-m-d H:i:s");
+			$item->date = clone($this->date);
 			$item->rank = count($this->items) + 1;
 
 			$item->package = $node->getAttribute( "data-docid" );
-
-			$titleNode = $xpath->query( "div/div/a[@class='title']", $node );
-			$item->title = trim( $titleNode->item(0)->nodeValue );
-			$publisherNode = $xpath->query( "div/div/div/a[@class='subtitle']", $node );
-			$item->publisher = trim( $publisherNode->item(0)->nodeValue );
 
 			$this->items[] = $item;
 			//var_dump($item);
@@ -99,6 +95,16 @@ class AndroidRankingCrawl extends BaseRankingCrawl
 	}
 
 	public function save()
+	{
+		//$this->save2json();
+		$this->save2db();
+	}
+
+	public function save2db()
+	{
+	}
+
+	public function save2json()
 	{
 		$path = $this->getPath( $this->date );
 		$dir = dirname( $path );
