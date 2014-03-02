@@ -1,6 +1,7 @@
 <?php
+require_once( INCLUDE_DIR . "DB/BaseTable.class.php" );
 
-class RankingTable
+class RankingTable extends BaseTable
 {
 	const RANKING_TABLE = "ranking";
 
@@ -10,15 +11,11 @@ class RankingTable
 		if( self::$Instance == null )
 		{
 			$instance = new self();
-			$commands = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'');
-			$instance->pdo = new PDO( sprintf("mysql:dbname=%s;host=%s", DB_NAME, DB_HOST), DB_USERNAME, DB_PASSWORD, $commands );
-			$instance->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$instance->pdo = self::makePdo();
 			self::$Instance = $instance;
 		}
 		return self::$Instance;
 	}
-
-	private $pdo;
 
 	public function insert( PackageInfo $i )
 	{
@@ -37,18 +34,26 @@ class RankingTable
 		$state->execute( $array );
 	}
 
-	public function selectByPackage( PackageInfo $i, $from, $to )
+	public function select( PackageInfo $i )
 	{
-		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `os` = :os AND `date` >= :from AND `date` <= :to";
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `os` = :os AND `date` = :date";
 		$state = $this->pdo->prepare( $sql );
-		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':from'=>$from->format("Y-m-d"), ':to'=>$to->format("Y-m-d") );
+		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d") );
+		$state->execute( $array );
+
+		if( $row = $state->fetch() ) return PackageInfo::parse($row);
+		return null;
+	}
+
+	public function selectByDate( DateTime $date, $os )
+	{
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `os` = :os AND `date` = :date";
+		$state = $this->pdo->prepare( $sql );
+		$array = array( ':os'=>$os, ':date'=>$date->format("Y-m-d") );
 		$state->execute( $array );
 
 		$rows = array();
-		while( $row = $state->fetch() )
-		{
-			$row[] = PackageInfo::parse($row);
-		}
+		while( $row = $state->fetch() ) $rows[] = PackageInfo::parse($row);
 		return $rows;
 	}
 
@@ -85,7 +90,7 @@ HEAR_PUB;
 		while( $row = $state->fetch() )
 		{
 			$rows[] = $row;
-		};
+		}
 		return $rows;
 	}
 }

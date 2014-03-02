@@ -1,11 +1,11 @@
 <?php
 require_once( '../configure.php' );
 require_once( INCLUDE_DIR . 'analyze/Publisher.class.php' );
-require_once( INCLUDE_DIR . 'analyze/BestWorst.class.php' );
+require_once( INCLUDE_DIR . 'analyze/Review.class.php' );
 require_once( INCLUDE_DIR . 'Util.class.php' );
 
 $Today = new DateTime();
-if(true)
+if(false)
 {
 	$instance = new AnalyzePublisher();
 	$instance->run( $Today, OS_ANDROID );
@@ -13,10 +13,10 @@ if(true)
 	unset($instance);
 }
 
-if(false)
+if(true)
 {
-	$instance = new AnalyzeBestWorst();
-	$instance->run( Util::getAndroidLastRankingPath() );
+	$instance = new AnalyzeReview();
+	$instance->run( $Today, OS_ANDROID );
 	unset($instance);
 }
 ?>

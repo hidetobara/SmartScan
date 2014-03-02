@@ -3,7 +3,7 @@ require_once( "../configure.php" );
 
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
 require_once( INCLUDE_DIR . "web/Pager.class.php" );
-require_once( INCLUDE_DIR . "analyze/BestWorst.class.php" );
+require_once( INCLUDE_DIR . "analyze/Review.class.php" );
 require_once( INCLUDE_DIR . "PackageManager.class.php" );
 
 

@@ -1,6 +1,7 @@
 <?php
 require_once( INCLUDE_DIR . "Util.class.php" );
 require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
+require_once( INCLUDE_DIR . "DB/PublisherTable.class.php" );
 
 
 class AnalyzePublisher
@@ -15,7 +16,7 @@ class AnalyzePublisher
 		$this->os = $os;
 
 		$this->calculate();
-		$this->saveToJson();
+		$this->save2db();
 	}
 
 	private function calculate()
@@ -38,7 +39,19 @@ class AnalyzePublisher
 		}
 	}
 
-	private function saveToJson()
+	private function save2db()
+	{
+		$list = array();
+		foreach( $this->result as $publisher => $packages )
+		{
+			$box = array('packages'=>$packages);
+			$list[ $publisher ] = $box;
+		}
+
+		PublisherTable::Factory()->insert( $this->date, $this->os, $list );
+	}
+
+	private function save2Json()
 	{
 		$result = "";
 		foreach( $this->result as $publisher => $list )
@@ -52,24 +65,6 @@ class AnalyzePublisher
 		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
 
 		file_put_contents( $path, $result );
-	}
-
-	public function loadFromJson( DateTime $date, $os )
-	{
-		$dateStr = $date->format("Ymd");
-		$paths = glob( DATA_DIR . "publisher/" . $dateStr . "*.{$os}.csv" );
-		if( count($paths) == 0 ) return null;
-
-		$result = array();
-		$this->path = $paths[0];
-		$file = fopen( $this->path, "r" );
-		while( $line = fgets($file) )
-		{
-			$item = json_decode($line, true);
-			$result[] = $item;
-		}
-		fclose( $file );
-		return $result;
 	}
 }
 ?>

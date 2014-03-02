@@ -20,7 +20,7 @@ if(true)
 	}
 }
 
-if(false)
+if(true)
 {
 	$crawl = new IosRankingCrawl();
 	$infos = $crawl->run();
