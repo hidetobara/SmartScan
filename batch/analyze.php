@@ -5,7 +5,7 @@ require_once( INCLUDE_DIR . 'analyze/Review.class.php' );
 require_once( INCLUDE_DIR . 'Util.class.php' );
 
 $Today = new DateTime();
-if(false)
+if(true)
 {
 	$instance = new AnalyzePublisher();
 	$instance->run( $Today, OS_ANDROID );

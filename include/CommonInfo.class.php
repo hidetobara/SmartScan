@@ -44,24 +44,26 @@ class PackageInfo
 	{
 		if( !is_array($a) ) return;
 
-		$this->os = strtolower( $a['os'] );
-		$this->date = new DateTime( $a['date'] );
-		$this->package = $a['package'];
+		if( $a['os'] ) $this->os = strtolower( $a['os'] );
+		if( $a['date'] ) $this->date = new DateTime( $a['date'] );
+		if( $a['package'] ) $this->package = $a['package'];
 
-		$this->rank = $a['rank'];
-		$this->rating = $a['rating'];
-		$this->rating_count = $a['rating_count'];
-		$this->rating_worst_count = $a['rating_worst_count'];
-		$this->rating_best_count = $a['rating_best_count'];
-		$this->title = $a['title'];
-		$this->publisher = $a['publisher'];
+		if( $a['rank'] ) $this->rank = $a['rank'];
+		if( $a['rating'] ) $this->rating = $a['rating'];
+		if( $a['rating_count'] ) $this->rating_count = $a['rating_count'];
+		if( $a['rating_worst_count'] ) $this->rating_worst_count = $a['rating_worst_count'];
+		if( $a['rating_best_count'] ) $this->rating_best_count = $a['rating_best_count'];
+		if( $a['title'] ) $this->title = $a['title'];
+		if( $a['publisher'] ) $this->publisher = $a['publisher'];
 
-		$this->image_url = $a['image_url'];	// direct url of image
-		$this->detail_url = $a['detail_url'];
+		if( $a['image_url'] ) $this->image_url = $a['image_url'];	// direct url of image
+
 		if( $this->os == OS_ANDROID ) $this->detail_url = "https://play.google.com/store/apps/details?id=" . $this->package;
+		else if( $a['detail_url'] ) $this->detail_url = $a['detail_url'];
+
 		$this->image_cache = "icon/" . $this->os . "/" . $this->package . ".png";	// cache of image
 
-		$this->point = $a['point'];
+		if( $a['point'] ) $this->point = $a['point'];
 	}
 
 	public function copy( $p )

@@ -42,6 +42,7 @@ class AndroidDetailCrawl extends BasePackageCrawl
 
 		$publishNode = $xpath->query( "//a[@class='document-subtitle primary']/span" );
 		$info->publisher = $publishNode->item(0)->nodeValue;
+		$info->publisher = mb_convert_kana($info->publisher, "s");
 
 		$imageNode = $xpath->query( "//div[@class='cover-container']/img[@class='cover-image']" );
 		$info->image_url = $imageNode->item(0)->getAttribute( "src" );

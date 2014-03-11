@@ -1,6 +1,6 @@
 <?php
 require_once( INCLUDE_DIR . "Util.class.php" );
-require_once( INCLUDE_DIR . "PackageManager.class.php" );
+require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
 
 
 class PackageTransition

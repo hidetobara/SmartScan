@@ -32,7 +32,7 @@ HEAR_INSERT;
 		}
 	}
 
-	public function select( DateTime $date, $os )
+	public function selectByDate( DateTime $date, $os )
 	{
 		$table = self::REVIEW_TABLE;
 		$sql = <<< HEAR_DATE

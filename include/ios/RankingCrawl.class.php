@@ -63,6 +63,7 @@ class IosRankingCrawl extends BaseRankingCrawl
 
 			$publisherNode = $xpath->query("artist", $node);
 			$i->publisher = $publisherNode->item(0)->nodeValue;
+			$i->publisher = mb_convert_kana($i->publisher, "s");
 
 			$imageNode = $xpath->query("image", $node);
 			$i->image_url = $imageNode->item($imageNode->length-1)->nodeValue;

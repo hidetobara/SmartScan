@@ -1,5 +1,7 @@
 <?php
 require_once( INCLUDE_DIR . "DB/BaseTable.class.php" );
+require_once( INCLUDE_DIR . "CommonInfo.class.php" );
+
 
 class RankingTable extends BaseTable
 {
@@ -26,12 +28,20 @@ class RankingTable extends BaseTable
 		$row = $state->fetch();
 		if( $row ) return;
 
-		$sql = "INSERT INTO " . self::RANKING_TABLE . " VALUES ( :package, :os, :date, :rank, :rating, :rating_count, :worst, :best, :title, :publisher, :image_url );";
-		$state = $this->pdo->prepare( $sql );
-		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d"),
-				':rank'=>$i->rank, ':rating'=>(float)$i->rating, ':rating_count'=>$i->rating_count, ':worst'=>$i->rating_worst_count, ':best'=>$i->rating_best_count,
-				':title'=>$i->title, ':publisher'=>$i->publisher, ':image_url'=>$i->image_url );
-		$state->execute( $array );
+		try
+		{
+			$sql = "INSERT INTO " . self::RANKING_TABLE . " VALUES ( :package, :os, :date, :rank, :rating, :rating_count, :worst, :best, :title, :publisher, :image, :detail );";
+			$state = $this->pdo->prepare( $sql );
+			$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d"),
+					':rank'=>$i->rank, ':rating'=>(float)$i->rating, ':rating_count'=>$i->rating_count, ':worst'=>$i->rating_worst_count, ':best'=>$i->rating_best_count,
+					':title'=>$i->title, ':publisher'=>$i->publisher, ':image'=>$i->image_url, ':detail'=>$i->detail_url );
+			$state->execute( $array );
+		}
+		catch(Exception $ex)
+		{
+			var_dump($ex);
+			var_dump($i);
+		}
 	}
 
 	public function select( PackageInfo $i )
@@ -41,7 +51,11 @@ class RankingTable extends BaseTable
 		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d") );
 		$state->execute( $array );
 
-		if( $row = $state->fetch() ) return PackageInfo::parse($row);
+		if( $row = $state->fetch() )
+		{
+			$i->retrieve($row);
+			return $i;
+		}
 		return null;
 	}
 

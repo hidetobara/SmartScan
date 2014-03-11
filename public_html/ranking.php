@@ -2,16 +2,13 @@
 require_once( "../configure.php" );
 
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
-require_once( INCLUDE_DIR . "android/RankingCrawl.class.php" );
-require_once( INCLUDE_DIR . "ios/RankingCrawl.class.php" );
-require_once( INCLUDE_DIR . "PackageManager.class.php" );
+require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
 
 
 class RankingWeb extends BaseWeb
 {
 	private $os;
 	private $date;
-	private $packager;
 
 	function __construct( $opt=null )
 	{
@@ -29,24 +26,9 @@ class RankingWeb extends BaseWeb
 
 	function handle()
 	{
-		if( $this->os == OS_ANDROID ) $crawl = new AndroidRankingCrawl();
-		if( $this->os == OS_IOS ) $crawl = new IosRankingCrawl();
-
-		if( $this->os )
-		{
-			$this->packager = new PackageManager();
-			$this->packager->load( new DateTime(), $this->os );
-		}
-
-		if( $crawl != null )
-		{
-			$crawl->load( $this->date );
-			foreach( $crawl->items as $item )
-			{
-				$this->packager->get( $item );
-			}
-			$this->assign( "packages", $crawl->items );
-		}
+		$ranking = RankingTable::Factory();
+		$items = $ranking->selectByDate( $this->date, $this->os );
+		$this->assign( "packages", $items );
 
 		$this->assign( "date", $this->date->format("Y-m-d") );
 		$this->assign( "os", $this->os );

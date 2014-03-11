@@ -4,7 +4,6 @@ require_once( "../configure.php" );
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
 require_once( INCLUDE_DIR . "web/Pager.class.php" );
 require_once( INCLUDE_DIR . "analyze/Publisher.class.php" );
-require_once( INCLUDE_DIR . "PackageManager.class.php" );
 
 
 class PublisherWeb extends BaseWeb
@@ -22,36 +21,30 @@ class PublisherWeb extends BaseWeb
 	{
 		$this->date = new DateTime( $_REQUEST['date'] );
 		$this->assign( "date", $this->date->format("Y-m-d") );
-
 		$this->os = strtolower( $_REQUEST['os'] );
-		if( OS_ANDROID == $this->os ) $this->handleByOs( OS_ANDROID );
-		else if( OS_IOS == $this->os ) $this->handleByOs( OS_IOS );
-		else $this->os = null;
+
+		if( $this->os )
+		{
+			$this->handleByOs( $this->date, $this->os );
+		}
 
 		$this->assign( "os", $this->os );
 	}
 
-	private function handleByOs( $os )
+	private function handleByOs( $date, $os )
 	{
-		$packager = new PackageManager();
-		$packager->load( $this->date, $os );
+		$publisher = new AnalyzePublisher();
+		$list = $publisher->loadFromDb( $date, $os );
 
-		$analyze = new AnalyzePublisher();
-		$items = $analyze->pickup( $this->date, $os );
-		if( !$items ) return;
-
-		$pager = new Pager( $items, 30 );
 		$out = array();
-		foreach( $pager->currentItems as $item )
+		foreach( $list as $holder )
 		{
-			$pubisher = $item['publisher'];
-			$packages = array();
-			foreach( $item['packages'] as $p ){
-				$i = PackageInfo::parse( array('os'=>$os, 'package'=>$p) );
-				$packager->get($i);
-				$packages[] = $i;
+			if( $holder instanceof PublisherTableHolder )
+			{
+				$packages = array();
+				foreach( $holder->packages as $p ) $packages[] = $p;
+				$out[] = array('publisher'=>mb_substr($holder->publisher, 0, 16) , 'packages'=>$packages, 'count'=>$holder->rating);
 			}
-			$out[] = array('publisher'=>mb_substr($pubisher, 0, 16) , 'packages'=>$packages, 'count'=>count($packages));
 		}
 
 		$this->assign( "publishers", $out );

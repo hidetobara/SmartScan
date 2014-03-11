@@ -2,9 +2,8 @@
 require_once( "../configure.php" );
 
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
-require_once( INCLUDE_DIR . "web/Pager.class.php" );
+require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
 require_once( INCLUDE_DIR . "analyze/Review.class.php" );
-require_once( INCLUDE_DIR . "PackageManager.class.php" );
 
 
 class IndexWeb extends BaseWeb
@@ -19,16 +18,17 @@ class IndexWeb extends BaseWeb
 	{
 		$today = new DateTime("-1 hour");
 
-		$packager = new PackageManager();
-		$packager->load( $today, OS_ANDROID );
+		$review = ReviewTable::Factory();
+		$items = $review->selectByDate( $today, OS_ANDROID );
 
-		$analyze = new AnalyzeBestWorst();
-		$items = $analyze->pickup( $today, OS_ANDROID );
+		$ranking = RankingTable::Factory();
 		if( $items )
 		{
-			$pager = new Pager( $items, 5 );
-			$packager->arrayGet( $pager->currentItems );
-			$this->assign( "best_packages", $pager->currentItems );
+			foreach( $items as $item )
+			{
+				$ranking->select( $item );
+			}
+			$this->assign( "best_packages", $items );
 		}
 	}
 }

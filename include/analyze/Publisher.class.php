@@ -51,20 +51,18 @@ class AnalyzePublisher
 		PublisherTable::Factory()->insert( $this->date, $this->os, $list );
 	}
 
-	private function save2Json()
+	public function loadFromDb( DateTime $date, $os )
 	{
-		$result = "";
-		foreach( $this->result as $publisher => $list )
+		$this->date = $date;
+		$this->os = $os;
+
+		$list = PublisherTable::Factory()->selectByDate( $this->date, $this->os );
+		$ranking = RankingTable::Factory();
+		foreach( $list as $holder )
 		{
-			$box = array('publisher'=>$publisher, 'packages'=>$list);
-			$result .= Util::jsonEncode($box) . "\n";
+			foreach( $holder->packages as $i ) $ranking->select( $i );
 		}
-
-		$path = DATA_DIR . "publisher/" . $this->date->format("Ymd") . "." . $this->os . ".csv";
-		$dir = dirname( $path );
-		if( !file_exists($dir) ) mkdir( $dir, 0777, true );
-
-		file_put_contents( $path, $result );
+		return $list;
 	}
 }
 ?>
