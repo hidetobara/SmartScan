@@ -7,21 +7,18 @@ class PackageTransition
 {
 	function pickup( PackageInfo $info, DateTime $from, DateTime $to )
 	{
-		$packager = new PackageManager();
+		$rows = RankingTable::Factory()->selectInTerm( $info, $from, $to );
 		$ranks = array();
 		$categories = array();
 
-		for( $date = clone($from); $date <= $to; $date->modify("+1 day")  )
+		foreach( $rows as $row )
 		{
-			$categories[] = $date->format("Y-m-d");
-
-			$info->rank = null;
-			$info = $packager->load( $date, $info->os )->get( $info );
-			$ranks[] = $info->rank;
+			$categories[] = $row->date->format("Y-m-d");
+			$ranks[] = (int)$row->rank;
 		}
 
-		if( $info->os == OS_ANDROID ) $os = "Android";
-		if( $info->os == OS_IOS ) $os = "iOS";
+		if( $row->os == OS_ANDROID ) $os = "Android";
+		if( $row->os == OS_IOS ) $os = "iOS";
 
 		return array( 'categories'=>$categories,
 				'series'=>array( array('name'=>$os,'data'=>$ranks) ) );

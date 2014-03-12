@@ -71,9 +71,21 @@ class RankingTable extends BaseTable
 		return $rows;
 	}
 
-	public function selectByPublisher( PackageInfo $i, $date )
+	public function selectInTerm( PackageInfo $i, DateTime $from, DateTime $to )
 	{
-		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `publisher` = :publisher AND `os` = :os AND `date` = :date";
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `date` >= :from AND `date` <= :to ";
+		$state = $this->pdo->prepare( $sql );
+		$array = array( ':package'=>$i->package, ':from'=>$from->format("Y-m-d"), ':to'=>$to->format("Y-m-d") );
+		$state->execute( $array );
+
+		$rows = array();
+		while( $row = $state->fetch() ) $rows[] = PackageInfo::parse($row);
+		return $rows;
+	}
+
+	public function selectByPublisher( PackageInfo $i, DateTime $date )
+	{
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `publisher` = :publisher AND `os` = :os AND `date` = :date ORDER BY `date` ASC";
 		$state = $this->pdo->prepare( $sql );
 		$array = array( ':publisher'=>$i->publisher, ':os'=>$i->os, ':date'=>$date->format("Y-m-d") );
 		$state->execute( $array );
