@@ -14,14 +14,28 @@
 
 {include file='web/_date_select.tpl' _action="./ranking.php" _date_str=$date}
 
-<p>※200位までの集計となります</p>
+<div>
+	ページ移動 &gt;
+	{foreach from=$pager->enablePages item=index}
+		<a href="./ranking.php?date={$date}&amp;os={$os}&amp;page={$index}"> {$index} </a>
+	{/foreach}
+</div>
+<br />
 
-アプリの情報
-{foreach from=$packages key=index item=item}
-	{include file='web/_package_info.tpl' _info=$item _number=$index+1}
+{foreach from=$pager->currentItems key=index item=item}
+	{include file='web/_package_info.tpl' _info=$item}
 {foreachelse}
 	データがありません
 {/foreach}
+<br />
+
+<div>
+	ページ移動 &gt;
+	{foreach from=$pager->enablePages item=index}
+		<a href="./ranking.php?date={$date}&amp;os={$os}&amp;page={$index}"> {$index} </a>
+	{/foreach}
+</div>
+<p>※200位までの集計となります</p>
 
 </body>
 </html>

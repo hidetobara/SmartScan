@@ -26,7 +26,7 @@ class IndexWeb extends BaseWeb
 		{
 			foreach( $items as $item )
 			{
-				$ranking->select( $item );
+				$ranking->retrieve( $item );
 			}
 			$this->assign( "best_packages", $items );
 		}

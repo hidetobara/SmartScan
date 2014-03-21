@@ -11,12 +11,15 @@ class Pager
 	public $previousPage;
 	public $currentPage;
 	public $nextPage;
+	public $enablePages;
 
 
 	public function __construct( array $items, $count = 0, $page = 1 )
 	{
 		$this->items = $items;
 		if( $count > 0 ) $this->pageCount = $count;
+		$length = floor( count( $items ) / $this->pageCount );
+		$this->enablePages = range( 1, (int)$length );
 
 		$this->trim( $page );
 	}

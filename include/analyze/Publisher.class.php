@@ -60,7 +60,7 @@ class AnalyzePublisher
 		$ranking = RankingTable::Factory();
 		foreach( $list as $holder )
 		{
-			foreach( $holder->packages as $i ) $ranking->select( $i );
+			foreach( $holder->packages as $i ) $ranking->retrieve( $i );
 		}
 		return $list;
 	}

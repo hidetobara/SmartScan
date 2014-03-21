@@ -16,10 +16,10 @@
 			</a>
 		</div>
 		<div class="floating_cell">
-			{if $_number}
-				{if $_number > 0}<span class='rank'> {$_number}. </span><br />{/if}
+			{if $_number && $_number > 0}
+				<span class='rank'> {$_number}. </span><br />
 			{elseif $_info->rank}
-				<span> {$_info->rank}. </span><br />
+				<span class='rank'> {$_info->rank}. </span><br />
 			{/if}
 
 			<span> {$_info->title} </span><br />

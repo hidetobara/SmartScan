@@ -3,44 +3,38 @@ require_once( "../configure.php" );
 
 require_once( INCLUDE_DIR . "web/BaseWeb.class.php" );
 require_once( INCLUDE_DIR . "web/Pager.class.php" );
-require_once( INCLUDE_DIR . "DB/RankingTable.class.php" );
+require_once( INCLUDE_DIR . "analyze/RankingShift.class.php" );
 
 
-class RankingWeb extends BaseWeb
+class ShiftWeb extends BaseWeb
 {
 	private $os;
 	private $date;
-	private $page;
 
 	function __construct( $opt=null )
 	{
 		parent::__construct( $opt );
-		$this->template = 'ranking.tpl';
+		$this->template = 'shift.tpl';
 	}
 
 	function initialize()
 	{
 		$this->os = strtolower( $_REQUEST['os'] );
 		$this->date = new DateTime( $_REQUEST['date'] );
-		$this->page = (int)$_REQUEST['page'];
+		$this->date = new DateTIme( "2014-03-19" );
 
 		if( !$this->os ) $this->os = OS_ANDROID;
-		if( !$this->page ) $this->page = 1;
 	}
 
 	function handle()
 	{
-		$ranking = RankingTable::Factory();
-		$rows = $ranking->selectByDate( $this->date, $this->os );
-		$pager = new Pager( $rows, 50, $this->page );
-
-		$this->assign( "pager", $pager );
-		$this->assign( "page", $this->page );
+		$shift = new RankingShift();
+		$rows = $shift->select( $this->date, $this->os );
+		$pager = new Pager( $rows, 30 );
 
 		$this->assign( "date", $this->date->format("Y-m-d") );
-		$this->assign( "os", $this->os );
+		$this->assign( "packages", $pager->currentItems );
 	}
 }
-$web = new RankingWeb();
+$web = new ShiftWeb();
 $web->run();
-?>

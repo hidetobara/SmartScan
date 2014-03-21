@@ -44,7 +44,7 @@ class RankingTable extends BaseTable
 		}
 	}
 
-	public function select( PackageInfo $i )
+	public function retrieve( PackageInfo $i )
 	{
 		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `os` = :os AND `date` = :date";
 		$state = $this->pdo->prepare( $sql );
