@@ -4,6 +4,11 @@ if( ENV_TYPE == 'RELEASE' ){
 	define( 'ROOT_DIR', '/home/baraoto/SmartScan/' );
 	define( 'SMARTY_DIR', '/home/baraoto/Smarty-3.1.12/libs/' );
 
+	define( 'DB_NAME', 'smart_scan' );
+	define( 'DB_HOST', '127.0.0.1' );
+	define( 'DB_USERNAME', 'root' );
+	define( 'DB_PASSWORD', 's390831' );
+
 }else if( ENV_TYPE == 'DEVELOP' ){
 	define( 'HOME_URL', 'http://127.0.0.1/SmartScan/public_html/' );
 	define( 'ROOT_DIR', 'C:/develop/xampp/htdocs/SmartScan/' );

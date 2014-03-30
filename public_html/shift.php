@@ -21,7 +21,6 @@ class ShiftWeb extends BaseWeb
 	{
 		$this->os = strtolower( $_REQUEST['os'] );
 		$this->date = new DateTime( $_REQUEST['date'] );
-		$this->date = new DateTIme( "2014-03-19" );
 
 		if( !$this->os ) $this->os = OS_ANDROID;
 	}

@@ -9,7 +9,7 @@
 {include file='web/_top_bar.tpl'}
 
 <div align='center'>
-	{base64image url='img/apple.png' style=''}
+	{base64image url='img/shift.jpg' style='width: 100%;'}
 </div>
 
 {include file='web/_date_select.tpl' _action="./shift.php" _date_str=$date}

@@ -17,24 +17,21 @@ class PublisherWeb extends BaseWeb
 		$this->template = 'publisher.tpl';
 	}
 
-	function handle()
+	function initialize()
 	{
-		$this->date = new DateTime( $_REQUEST['date'] );
-		$this->assign( "date", $this->date->format("Y-m-d") );
 		$this->os = strtolower( $_REQUEST['os'] );
+		$this->date = new DateTime( $_REQUEST['date'] );
 
-		if( $this->os )
-		{
-			$this->handleByOs( $this->date, $this->os );
-		}
+		if( !$this->os ) $this->os = OS_ANDROID;
 
+		$this->assign( "date", $this->date->format("Y-m-d") );
 		$this->assign( "os", $this->os );
 	}
 
-	private function handleByOs( $date, $os )
+	function handle()
 	{
 		$publisher = new AnalyzePublisher();
-		$list = $publisher->loadFromDb( $date, $os );
+		$list = $publisher->loadFromDb( $this->date, $this->os );
 
 		$out = array();
 		foreach( $list as $holder )

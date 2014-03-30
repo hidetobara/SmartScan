@@ -1,7 +1,8 @@
 <?php
-require_once( INCLUDE_DIR . "CommonInfo.class.php" );
-require_once( INCLUDE_DIR . "android/RankingCrawl.class.php" );
-require_once( INCLUDE_DIR . "ios/RankingCrawl.class.php" );
+require_once(INCLUDE_DIR . "CommonInfo.class.php");
+require_once(INCLUDE_DIR . "android/RankingCrawl.class.php");
+require_once(INCLUDE_DIR . "ios/RankingCrawl.class.php");
+require_once(INCLUDE_DIR . "DB/RankingTable.class.php");
 
 
 class PackageManager
@@ -15,7 +16,9 @@ class PackageManager
 
 	private $items;
 
-	public function load( $date, $os )
+	public function clear(){ $this->items = array(); }
+
+	public function loadFromFile( $date, $os )
 	{
 		$this->items = array();	// clear
 
@@ -35,27 +38,21 @@ class PackageManager
 		$content = @file_get_contents( $path );
 		if( !$content ) return $this;
 
-		$array = json_decode( $content, true );
+		$array = Util::jsonDecode( $content );
 		foreach( $array as $a )
 		{
-			$p = PackageInfo::parse( $a );
+			$p = PackageInfo::parse( $a );	if(!$p->title){ var_dump(array($a,$p)); exit; }
 			if( $p == null || !$p->package ) continue;
 			$this->items[ $p->package ] = $p;
 		}
 		return $this;
 	}
 
-	public function arrayGet( array $array )
+	public function save2db()
 	{
-		foreach( $array as $a )
+		foreach( $this->items as $item )
 		{
-			if( $a instanceof PackageInfo ) $this->get( $a );
+			RankingTable::Factory()->insert( $item );
 		}
-	}
-
-	public function get( PackageInfo $p )
-	{
-		$p->copy( $this->items[ $p->package ] );
-		return $p;
 	}
 }
