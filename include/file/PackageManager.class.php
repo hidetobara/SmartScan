@@ -41,7 +41,7 @@ class PackageManager
 		$array = Util::jsonDecode( $content );
 		foreach( $array as $a )
 		{
-			$p = PackageInfo::parse( $a );	if(!$p->title){ var_dump(array($a,$p)); exit; }
+			$p = PackageInfo::parse( $a );
 			if( $p == null || !$p->package ) continue;
 			$this->items[ $p->package ] = $p;
 		}
