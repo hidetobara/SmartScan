@@ -12,7 +12,7 @@ class AnalyzePublisher
 
 	public function run( DateTime $date, $os )
 	{
-		$this->date = $date;
+		$this->date = clone($date);
 		$this->os = $os;
 
 		$this->calculate();

@@ -25,5 +25,6 @@ if(true)
 {
 	$instance = new RankingShift();
 	$instance->run( $Today );
+	unset($instance);
 }
 ?>
