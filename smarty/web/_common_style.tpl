@@ -9,8 +9,9 @@
 
 		.rank { font-weight: bold; font-size: x-large; }
 		.fixed_cell { table-layout: fixed; width:100; height:100; }
-		.floating_box { float: left; height: 100; width: 100; }
+		.floating_minibox { float: left; height: 60; width: 60; }
 		.floating_cell { float: left; height: 100; }
+		.minibox { width: 60; height: 60; }
 		.clear { clear: both; }
 		-->
 	</style>
