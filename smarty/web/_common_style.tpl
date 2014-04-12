@@ -8,9 +8,9 @@
 		.chapter_bar { text-align: center; background-color: #ddbbbb; width: 60%; font-size: x-large; }
 
 		.rank { font-weight: bold; font-size: x-large; }
-		.fixed_cell { table-layout: fixed; width: 70; height: 70; }
+		.fixed_cell { table-layout: fixed; width: 50; height: 50; }
 		.floating_minibox { float: left; height: 50; width: 50; }
-		.floating_cell { float: left; height: 80; }
+		.floating_cell { float: left; height: 60; }
 		.minibox { width: 50; height: 50; }
 		.clear { clear: both; }
 		-->
