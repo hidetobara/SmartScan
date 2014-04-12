@@ -16,7 +16,7 @@ foreach( $files as $file )
 	$cells = explode("/", $file);
 	$cells = array_slice($cells, -2, 2);
 	$path = HOME_DIR . "thumb/" . implode("/", $cells);
-	print($file . " > " . $path . "\n");
+	if(ENV_TYPE == 'DEVELOP') print($file . " > " . $path . "\n");
 	$dir = dirname($path);
 	if( !is_dir($dir) ) mkdir( $dir, 0777, true );
 	imagepng($resize, $path);

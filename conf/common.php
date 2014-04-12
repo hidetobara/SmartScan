@@ -1,6 +1,6 @@
 <?php
 if( ENV_TYPE == 'RELEASE' ){
-	define( 'HOME_URL', 'http://49.212.141.20/SmartScan/' );
+	define( 'HOME_URL', 'http://153.120.3.168/SmartScan/' );
 	define( 'ROOT_DIR', '/home/baraoto/SmartScan/' );
 	define( 'SMARTY_DIR', '/home/baraoto/Smarty-3.1.12/libs/' );
 
