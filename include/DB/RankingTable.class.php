@@ -73,9 +73,9 @@ class RankingTable extends BaseTable
 
 	public function selectInTerm( PackageInfo $i, DateTime $from, DateTime $to )
 	{
-		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `date` >= :from AND `date` <= :to ";
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `os` = :os AND `date` >= :from AND `date` <= :to ";
 		$state = $this->pdo->prepare( $sql );
-		$array = array( ':package'=>$i->package, ':from'=>$from->format("Y-m-d"), ':to'=>$to->format("Y-m-d") );
+		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':from'=>$from->format("Y-m-d"), ':to'=>$to->format("Y-m-d") );
 		$state->execute( $array );
 
 		$rows = array();
