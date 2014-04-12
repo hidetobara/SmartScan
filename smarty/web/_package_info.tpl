@@ -17,9 +17,9 @@
 		</div>
 		<div class="floating_cell">
 			{if $_number && $_number > 0}
-				<span class='rank'> {$_number}. </span><br />
+				<span class='rank'> {$_number}. </span>
 			{elseif $_info->rank}
-				<span class='rank'> {$_info->rank}. </span><br />
+				<span class='rank'> {$_info->rank}. </span>
 			{/if}
 
 			<span> {$_info->title} </span><br />
@@ -28,7 +28,7 @@
 				<span> {(int)$_info->point} point. </span><br />
 			{/if}
 
-			<span><a href="transition.php?package={$_info->package}&amp;os={$_info->os}"> 変遷 &gt;&gt;&gt; </a></span>
+			<span><a href="transition.php?package={$_info->package}&amp;os={$_info->os}"> ランキング変動 &gt;&gt;&gt; </a></span>
 		</div>
 			<div class="clear" />
 		</div>
