@@ -10,7 +10,7 @@
 		.rank { font-weight: bold; font-size: x-large; }
 		.fixed_cell { table-layout: fixed; width: 50; height: 50; }
 		.floating_minibox { float: left; height: 50; width: 50; }
-		.floating_cell { float: left; height: 60; }
+		.floating_cell { float: left; height: 70; }
 		.minibox { width: 50; height: 50; }
 		.clear { clear: both; }
 		-->
