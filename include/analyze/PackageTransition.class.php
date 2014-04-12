@@ -13,7 +13,9 @@ class PackageTransition
 
 		foreach( $rows as $row )
 		{
-			$categories[] = $row->date->format("Y-m-d");
+			$c = "";
+			if( $row->date->format("d") == 1 || $row->date->format("d") == 15 ) $c = $row->date->format("Y-m-d");
+			$categories[] = $c;
 			$ranks[] = (int)$row->rank;
 		}
 

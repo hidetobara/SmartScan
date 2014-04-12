@@ -6,9 +6,9 @@
 </head>
 <body>
 
-{base64image url='img/androids.jpg' style='width: 100%;'}
-
 {include file='web/_top_bar.tpl'}
+
+<img src='img/androids.jpg' style='width: 100%;'}
 
 <div align='left'>
 	注目の高評価アプリ<br />

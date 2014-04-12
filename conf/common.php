@@ -36,6 +36,8 @@ define( 'TMP_DIR', ROOT_DIR . 'tmp/' );
 define( 'SMARTY_WORK_DIR', ROOT_DIR . 'smarty_work/' );
 define( 'SMARTY_TEMPLATE_DIR', ROOT_DIR . 'smarty/' );
 
+define( 'THUMB_SIZE', 50 );
+
 mb_regex_encoding( 'UTF-8' );
 ini_set( 'memory_limit', '32M' );
 ?>

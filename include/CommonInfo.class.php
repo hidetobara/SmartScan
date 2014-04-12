@@ -61,7 +61,7 @@ class PackageInfo
 		if( $this->os == OS_ANDROID ) $this->detail_url = "https://play.google.com/store/apps/details?id=" . $this->package;
 		else if( $a['detail_url'] ) $this->detail_url = $a['detail_url'];
 
-		$this->image_cache = "icon/" . $this->os . "/" . $this->package . ".png";	// cache of image
+		$this->image_cache = "thumb/" . $this->os . "/" . $this->package . ".png";	// cache of image
 
 		if( $a['point'] ) $this->point = $a['point'];
 	}
