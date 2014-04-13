@@ -5,8 +5,14 @@ $files = glob( HOME_DIR . "icon/*/*.png" );
 foreach( $files as $file )
 {
 	$original = imagecreatefrompng($file);
+	if( $original == null ) $original = imagecreatefromjpeg($file);
 	$x = imagesx($original);
 	$y = imagesy($original);
+	if($x == 0 || $y == 0)
+	{
+		print($file . " is BROKEN.\n");
+		continue;
+	}
 
 	$resize = imagecreatetruecolor(THUMB_SIZE, THUMB_SIZE);
 	imagealphablending($resize, false);  // アルファブレンディングをoffにする
@@ -16,7 +22,6 @@ foreach( $files as $file )
 	$cells = explode("/", $file);
 	$cells = array_slice($cells, -2, 2);
 	$path = HOME_DIR . "thumb/" . implode("/", $cells);
-	if(ENV_TYPE == 'DEVELOP') print($file . " > " . $path . "\n");
 	$dir = dirname($path);
 	if( !is_dir($dir) ) mkdir( $dir, 0777, true );
 	imagepng($resize, $path);
