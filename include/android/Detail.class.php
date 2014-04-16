@@ -47,6 +47,9 @@ class AndroidDetailCrawl extends BasePackageCrawl
 		$imageNode = $xpath->query( "//div[@class='cover-container']/img[@class='cover-image']" );
 		$info->image_url = $imageNode->item(0)->getAttribute( "src" );
 
+		$descNode = $xpath->query( "//div[@class='id-app-orig-desc']" );
+		$info->description = strip_tags( $descNode->item(0)->nodeValue );
+
 		$valueNode = $xpath->query("//meta[@itemprop='ratingValue']");
 		$info->rating = $valueNode->item(0)->getAttribute("content");
 

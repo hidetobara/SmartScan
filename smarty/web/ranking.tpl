@@ -32,7 +32,7 @@
 <div>
 	ページ移動 &gt;
 	{foreach from=$pager->enablePages item=index}
-		<a href="./ranking.php?date={$date}&amp;os={$os}&amp;page={$index}"> {$index} </a>
+		&nbsp;<a href="./ranking.php?date={$date}&amp;os={$os}&amp;page={$index}">{$index}</a>&nbsp;
 	{/foreach}
 </div>
 <p>※200位までの集計となります</p>

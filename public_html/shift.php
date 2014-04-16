@@ -20,7 +20,7 @@ class ShiftWeb extends BaseWeb
 	function initialize()
 	{
 		$this->os = strtolower( $_REQUEST['os'] );
-		$this->date = new DateTime( $_REQUEST['date'] );
+		$this->date = new DateTime( $_REQUEST['date'] ? $_REQUEST['date'] : "-1 hour" );
 
 		if( !$this->os ) $this->os = OS_ANDROID;
 	}

@@ -17,6 +17,8 @@ class PackageInfo
 	public $title;
 	public $publisher;
 
+	public $description;
+
 	public $image_url;
 	public $detail_url;
 	public $image_cache;
