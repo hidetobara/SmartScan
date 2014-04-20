@@ -1,4 +1,6 @@
 <?php
+require_once( INCLUDE_DIR . "DB/DescriptionTable.class.php" );
+
 
 /*
  * アプリのパッケージ情報
@@ -95,8 +97,12 @@ class PackageInfo
 
 	public function save()
 	{
-		$table = RankingTable::Factory();
-		$table->insert($this);
+		// Ranking
+		$ranking = RankingTable::Factory();
+		$ranking->insert($this);
+		// Description
+		$desc = DescriptionTable::Factory();
+		$desc->insert($this);
 	}
 }
 

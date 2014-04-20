@@ -7,6 +7,7 @@ batch/*.log
 conf/local.php
 
 public_html/icon/*
+public_html/thumb
 smarty_work/
 
 !/.gitignore

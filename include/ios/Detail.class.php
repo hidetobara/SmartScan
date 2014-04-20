@@ -52,5 +52,8 @@ class IosDetailCrawl extends BasePackageCrawl
 		{
 			$info->rating_count = (int)$matches[0];
 		}
+
+		$descNode = $xpath->query( "//div[@class='product-review']" );
+		$info->description = strip_tags( $descNode->item(0)->nodeValue );
 	}
 }
