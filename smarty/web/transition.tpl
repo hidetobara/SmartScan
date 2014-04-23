@@ -33,6 +33,7 @@
 			};
 
 			$.getJSON('trans-package.php?package={$package}&os={$os}', function(data) {
+				console.log("oh");
 				options.xAxis.categories = data.categories;
 				options.series = data.series;
 				var chart = new Highcharts.Chart(options);

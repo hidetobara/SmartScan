@@ -4,7 +4,7 @@ require_once( "../configure.php" );
 require_once( INCLUDE_DIR . "analyze/PackageTransition.class.php" );
 
 
-class TransitionWeb
+class TransitionApi
 {
 	function run()
 	{
@@ -20,6 +20,6 @@ class TransitionWeb
 		print Util::jsonEncode( $out );
 	}
 }
-$web = new TransitionWeb();
+$web = new TransitionApi();
 $web->run();
 ?>

@@ -21,6 +21,7 @@ class RankingShiftTable extends BaseTable
 	{
 		$table = self::REVIEW_TABLE;
 		$sql = "INSERT INTO $table VALUES ( :date, :os, :package, :shift )";
+		$sql .= " ON DUPLICATE KEY UPDATE `shift`=:shift";
 		$state = $this->pdo->prepare( $sql );
 		$array = array( ':date'=>$i->date->format('Y-m-d'), ':os'=>$i->os, ':package'=>$i->package, ':shift'=>$shift );
 		$state->execute( $array );

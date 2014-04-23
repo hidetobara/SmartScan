@@ -21,16 +21,10 @@ class RankingTable extends BaseTable
 
 	public function insert( PackageInfo $i )
 	{
-		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `package` = :package AND `os` = :os AND `date` = :date";
-		$state = $this->pdo->prepare( $sql );
-		$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d") );
-		$state->execute( $array );
-		$row = $state->fetch();
-		if( $row ) return;
-
 		try
 		{
 			$sql = "INSERT INTO " . self::RANKING_TABLE . " VALUES ( :package, :os, :date, :rank, :rating, :rating_count, :worst, :best, :title, :publisher, :image, :detail );";
+			$sql .= " ON DUPLICATE KEY UPDATE `rank`=:rank, `rating`=:rating, `rating_count`=:rating_count, `worst`=:worst, `best`=:best";
 			$state = $this->pdo->prepare( $sql );
 			$array = array( ':package'=>$i->package, ':os'=>$i->os, ':date'=>$i->date->format("Y-m-d"),
 					':rank'=>$i->rank, ':rating'=>(float)$i->rating, ':rating_count'=>$i->rating_count, ':worst'=>$i->rating_worst_count, ':best'=>$i->rating_best_count,

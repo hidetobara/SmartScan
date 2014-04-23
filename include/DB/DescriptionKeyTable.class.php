@@ -26,12 +26,11 @@ class DescriptionKeyTable extends BaseTable
 		$state = $this->pdo->prepare( $sql );
 		$array = array( ':date'=>$date->format("Y-m-d"), ':os'=>$os, ':key'=>$key, ':count'=>$count );
 		$state->execute( $array );
-
 	}
 
 	public function selectByKey( $key, $os, DateTime $from, DateTime $to )
 	{
-		$sql = "SELECT * FROM " . self::DESCRIPTION_TABLE . " WHERE `key`=:key AND `os`=:os AND `date`>=:from AND `date`<:to";
+		$sql = "SELECT * FROM " . self::DESCRIPTION_TABLE . " WHERE `key`=:key AND `os`=:os AND `date`>=:from AND `date`<=:to";
 		$state = $this->pdo->prepare( $sql );
 		$array = array( 'key'=>$key, ':os'=>$os, ':from'=>$from->format("Y-m-d"), ':to'=>$to->format("Y-m-d") );
 		$state->execute( $array );
@@ -39,7 +38,7 @@ class DescriptionKeyTable extends BaseTable
 		$rows = array();
 		while( $row = $state->fetch() )
 		{
-			$rows [] = $row;
+			$rows[] = $row;
 		}
 		return $rows;
 	}
