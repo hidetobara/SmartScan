@@ -55,7 +55,7 @@ class RankingTable extends BaseTable
 
 	public function selectByDate( DateTime $date, $os )
 	{
-		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `os` = :os AND `date` = :date";
+		$sql = "SELECT * FROM " . self::RANKING_TABLE . " WHERE `os` = :os AND `date` = :date ORDER BY `rank` ASC";
 		$state = $this->pdo->prepare( $sql );
 		$array = array( ':os'=>$os, ':date'=>$date->format("Y-m-d") );
 		$state->execute( $array );
