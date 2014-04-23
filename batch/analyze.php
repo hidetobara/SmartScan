@@ -13,7 +13,6 @@ if(true)
 	$instance->run($Today);
 	unset($instance);
 }
-exit;
 
 if(true)
 {
