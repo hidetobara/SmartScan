@@ -30,6 +30,7 @@ class PublisherTable extends BaseTable
 		$sql = <<< HEAR_INSERT
 INSERT INTO $table
 VALUES ( :date, :os, :publisher, :rating, :data )
+ON DUPLICATE KEY UPDATE `rating`=:rating, `data`=:data
 HEAR_INSERT;
 		$state = $this->pdo->prepare( $sql );
 		foreach( $publishers as $p => $data )
