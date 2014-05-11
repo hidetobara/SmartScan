@@ -1,5 +1,5 @@
 <?php
-require_once( INCLUDE_DIR . "keyword/mecab.function.php" );
+require_once( INCLUDE_DIR . "morpheme/mecab.function.php" );
 require_once( INCLUDE_DIR . "DB/DescriptionTable.class.php" );
 require_once( INCLUDE_DIR . "DB/DescriptionKeyTable.class.php" );
 
