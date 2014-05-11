@@ -15,6 +15,7 @@
 	{foreach from=$best_packages key=index item=item}
 		{include file='web/_package_info.tpl' _info=$item _number=$index+1 _is_embed=true }
 	{/foreach}
+	<span>※評価方法：(高評価/低評価) x 評価数</span>
 </div>
 
 </body>

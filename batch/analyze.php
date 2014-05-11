@@ -4,9 +4,18 @@ require_once( INCLUDE_DIR . 'analyze/Publisher.class.php' );
 require_once( INCLUDE_DIR . 'analyze/Review.class.php' );
 require_once( INCLUDE_DIR . 'analyze/RankingShift.class.php' );
 require_once( INCLUDE_DIR . 'analyze/CountKeyword.class.php' );
+require_once( INCLUDE_DIR . 'analyze/UsedKeyword.class.php' );
 require_once( INCLUDE_DIR . 'Util.class.php' );
 
 $Today = new DateTime();
+if(true)
+{
+	$instance = new UsedKeyword();
+	$instance->run($Today, OS_ANDROID);
+	$instance->run($Today, OS_IOS);
+	unset($instance);
+}
+
 if(true)
 {
 	$instance = new CountKeyword();

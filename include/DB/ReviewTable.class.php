@@ -23,6 +23,7 @@ class ReviewTable extends BaseTable
 		$sql = <<< HEAR_INSERT
 INSERT INTO $table
 VALUES ( :date, :os, :package, :point )
+ON DUPLICATE KEY UPDATE `point`=:point
 HEAR_INSERT;
 		$state = $this->pdo->prepare( $sql );
 		foreach( $packages as $p )

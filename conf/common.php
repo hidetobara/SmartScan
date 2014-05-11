@@ -9,6 +9,8 @@ if( ENV_TYPE == 'RELEASE' ){
 	define( 'DB_USERNAME', 'root' );
 	define( 'DB_PASSWORD', 's390831' );
 
+	define( 'MECAB_EXE', '/usr/local/bin/mecab' );
+
 }else if( ENV_TYPE == 'DEVELOP' ){
 	define( 'HOME_URL', 'http://127.0.0.1/SmartScan/public_html/' );
 	define( 'ROOT_DIR', 'C:/develop/xampp/htdocs/SmartScan/' );
@@ -18,6 +20,8 @@ if( ENV_TYPE == 'RELEASE' ){
 	define( 'DB_HOST', '127.0.0.1' );
 	define( 'DB_USERNAME', 'root' );
 	define( 'DB_PASSWORD', '' );
+
+	define( 'MECAB_EXE', 'C:/Develop/MeCab/bin/mecab.exe' );
 
 }else{
 	print( "Check ENV_TYPE !" );

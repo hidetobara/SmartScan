@@ -5,7 +5,7 @@ require_once( INCLUDE_DIR . "DB/DescriptionKeyTable.class.php" );
 
 class CountKeyword
 {
-	const KEYWORDS = "RPG,CRIWARE,ドラゴン,イケメン,恋愛";
+	const KEYWORDS = "RPG,ドラゴン,イケメン,恋愛";
 
 	function run( $today )
 	{

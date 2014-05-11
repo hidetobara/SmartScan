@@ -43,17 +43,17 @@ class DescriptionKeyTable extends BaseTable
 		return $rows;
 	}
 
-	public function selectByDate( DateTime $date )
+	public function selectByDate( DateTime $date, $os )
 	{
-		$sql = "SELECT * FROM " . self::DESCRIPTION_TABLE . " WHERE `date`=:date";
+		$sql = "SELECT * FROM " . self::DESCRIPTION_TABLE . " WHERE `date`=:date AND `os`=:os ORDER BY `count` DESC";
 		$state = $this->pdo->prepare( $sql );
-		$array = array( ':date'=>$date->format("Y-m-d") );
+		$array = array( ':date'=>$date->format("Y-m-d"), ':os'=>$os );
 		$state->execute( $array );
 
 		$rows = array();
 		while( $row = $state->fetch() )
 		{
-			$rows [] = $row;
+			$rows[] = $row;
 		}
 		return $rows;
 	}
