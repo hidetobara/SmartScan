@@ -78,7 +78,7 @@ class AndroidRankingCrawl extends BaseRankingCrawl
 		@$doc->loadHTML( '<?xml encoding="UTF-8">' . $html );
 
 		$xpath = new DOMXpath( $doc );
-		$nodes = $xpath->query( "//div[@data-docid]" );
+		$nodes = $xpath->query( "//div[@data-docid and @data-server-cookie]" );
 
 		foreach( $nodes as $node )
 		{
