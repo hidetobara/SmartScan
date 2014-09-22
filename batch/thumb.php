@@ -4,7 +4,7 @@ require_once( '../configure.php' );
 $files = glob( HOME_DIR . "icon/*/*.png" );
 foreach( $files as $file )
 {
-	$original = imagecreatefrompng($file);
+	$original = @imagecreatefrompng($file);
 	if( $original == null ) $original = imagecreatefromjpeg($file);
 	$x = imagesx($original);
 	$y = imagesy($original);
